@@ -4,8 +4,8 @@
 <head>
   <meta charset='utf-8'>
   <title>CSE 494 - Spring 2022 - Homework #4</title>
-  <link rel='stylesheet' href='css/styles.css'>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />  -->
+  <link rel='stylesheet' href='css/style.css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" /> 
   <script src='https://d3js.org/d3.v5.min.js'></script>
   <script src='main.js'></script>
 </head>
@@ -17,34 +17,20 @@
     <!-- <hr style='width:100%'> -->
     <h1>Nutrition Dashboard</h1>
     <div class="row"></div>
-    <!-- &nbsp;Year:&nbsp;
-    <input id='year-input' type='number' value='1980' min='1980' max='2013' onchange='drawBackground();' />
-    &nbsp;&nbsp;
+   
 
-    <input type='button' id="playbutton" value="Play" onclick="playButton()">
-    <input type='button' id="resetbutton" value="Reset" onclick="resetButton()">
-
-    <div id="slider-wrapper">
-      <div id="date-slider"></div>
-    </div> -->
-<!-- 
-    <br />
-    <br /> -->
-    <!-- Y -->
-    &nbsp;Dropdown 1:&nbsp;
+    &nbsp;Food Type:&nbsp;
     <select id='attribute-select-y' onchange='drawBackground();'>
       <option value='Cheese'>Cheese</option>
       <option value='Salad dressing'>Salad dressing</option>
       <option value='Cereals'>Cereals</option>
       <option value='Fruits'>Fruits</option>
       <option value='Pie'>Pie</option>
-      <!-- <option value='Data.Rural Development.Rural Population'>Rural Population</option> -->
-      <!-- <option value='Data.Urban Development.Urban Population Percent'>Urban Population</option>  -->
+
     </select>
-    <!-- X -->
-    &nbsp;Dropdown 2&nbsp;
+ 
+    &nbsp;Food Item&nbsp;
     <select id='attribute-select-x' onchange='drawBackground();'>
-      <!-- <option value='Data.Infrastructure.Mobile Cellular Subscriptions'>Mobile Subscriptions</option> -->
       <option value='Data.Urban Development.Urban Population Percent'>Urban Population</option> 
       <option value='Data.Infrastructure.Mobile Cellular Subscriptions per 100 People'>Mobile Subscriptions</option>
       <option value='Data.Rural Development.Rural Population'>Rural Population</option>
@@ -53,35 +39,52 @@
       <option value='Data.Health.Life Expectancy at Birth, Total'>Life Expectancy</option>
       <option value='Data.Health.Fertility Rate'>Fertility Rate</option>
     </select>
-    &nbsp;Dropdown 3:&nbsp;
+
+    &nbsp;Nutrient:&nbsp;
     <select id='attribute-select-s' onchange='drawBackground();'>
-      <option value='Data.Health.Total Population'>Population</option>
-      <option value='Data.Rural Development.Rural Population'>Rural Population</option>
-      <option value='Data.Urban Development.Urban Population Percent'>Urban Population</option> 
-      <option value='Data.Health.Death Rate'>Death Rate</option>
-      <option value='Data.Health.Birth Rate'>Birth Rate</option>
-      <option value='Data.Health.Fertility Rate'>Fertility Rate</option>
+      <option value='Data.Alpha Carotene'>Alpha Carotene</option>
+      <option value='Data.Beta Carotene'>Beta Carotene</option>
+      <option value='Data.Carbohydrate'>Carbohydrate</option> 
+      <option value='Data.Cholesterol'>Cholesterol</option>
+      <option value='Data.Fiber'>Fiber</option>
+      <option value='Data.Protein'>Protein</option>
+      <option value='Data.Sugar Total'>Sugar</option>
+      <option value='Data.Fat.Total Lipid'>Lipids</option>
+      <option value='Data.Major Minerals.Zinc'>Zinc</option>
+      <option value='Data.Major Minerals.Sodium'>Sodium</option>
+      
       
     </select>
     <br />
     <br />
+    <br>
 
-    <div class="grid">
-      <div class="grid-item">
-        <svg id='chart'> 
-          <svg id='background'></svg> 
-        </svg>
-        <!-- <svg id='background'> 
-          <svg id='chart'></svg> 
-        </svg>
-         -->
+    <div class="row">
+      <div class="column">
+        <svg id='D'></svg>
       </div>
-      <div class="grid-item">
-        <br />
+      <div class="column">
+        
+      </div>
+      <div class="column">
+        <div class="row">
+          <svg id='A'> </svg>
+          <svg id='B'></svg>
+        </div>
+        <div class="row">
+          <svg id='C'> </svg>
+        </div>
+      </div>
+    </div> 
+
+    <div>
+      
         
         
+       
+        
 
-      </div>
+      
     </div>
 
 
