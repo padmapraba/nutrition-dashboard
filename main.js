@@ -113,7 +113,7 @@ function drawC() {
         .attr("cx", widthC / 2)
         .attr("cy", heightC / 2)
         .style("fill", d => color(d.Description))
-        .style("fill-opacity", 1)
+        .style("fill-opacity", .9)
         .style("stroke-width", 1)
         .on('mouseover', function (d, i) {
             hovertip.html(`<b>${d.Description}</b><br>${+d[attrNutrient]}`)
@@ -134,7 +134,7 @@ function drawC() {
             .force("center", d3.forceCenter().x(widthC / 2).y(heightC / 2)) 
             .force("charge", d3.forceManyBody().strength(.5)) 
             .force("collide", d3.forceCollide().strength(.1).radius(function(d){ return (size(+d[attrNutrient])+3) }).iterations(1)) 
-       simulation
+        simulation
            .nodes(foodData)
            .on("tick", function(d){
              node
