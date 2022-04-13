@@ -27,8 +27,17 @@
     border:1px solid rgb(0, 0, 0);
     border-radius:10px;
     height:390px;
-    width:1010px;
+    width:650px;
     margin:5px;
+    overflow: visible;
+  }
+  #E{
+    border:1px solid rgb(0, 0, 0);
+    border-radius:10px;
+    height:390px;
+    width:350px;
+    margin:5px;
+    overflow: visible;
   }
 
   #D{

@@ -1,4 +1,4 @@
-var svgA, svgB, svgC, svgD;
+var svgA, svgB, svgC, svgD, svgE;
 var width, height, innerHeight, innerWidth;
 var margin = { top: 50, right: 60, bottom: 60, left: 100 };
 var ingredients_data, descrip_data, attrFoodType, attrFoodItem, attrNutrient;
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   svgB = d3.select("#B");
   svgC = d3.select("#C");
   svgD = d3.select("#D");
+  svgE = d3.select("#E")
 
   width = +svgA.style("width").replace("px", "");
   height = +svgA.style("height").replace("px", "");
@@ -29,13 +30,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // data wrangling
 
-    drawC();
+    drawA();
   });
 });
 
 function drawA() {
-  drawB();
+
+  // const margin = { top: 50, bottom: 50, left: 50, right: 50 };
+  var widthA = svgA.node().clientWidth;
+  var heightA = svgA.node().clientHeight;
+  // // var width = 700, height  = 500;
+
+
+  // //color
+  var addColor = d3.scaleOrdinal(d3.schemeDark2);
+
+  svgA.select("g").remove();
+
+  // var node = svgA.append("g")
+
+  // var svgA = d3.select("body").append("svgA").attr("width", widthA).attr("height", heightA)
+  //   .style("background", "white");
+
+  // //input info for data
+  // var info = [
+
+  //   { type: "carbs", amount: 60 },
+  //   { type: "proteins", amount: 20 },
+  //   { type: "vitamin", amount: 5},
+  //   { type: "mineral", amount: 5},
+  //   { type: "fats", amount:  10},
+  // ];
+
+  var info = {carbs: 60, proteins: 20, vitamin: 5, mineral: 5, fats:10}
+  console.log(info)
+  // var data = d3.pie().sort(null).value(function (d) { return d.amount; })(info);
+  var pie = d3.pie().value(function(d) {return d.value;})
+  var data_ready = pie(d3.entries(info))
+  // console.log(data);
+  //make arc
+  var theSegment = d3.arc()
+    .innerRadius(0)
+    .outerRadius(150)
+    .padAngle(.05)
+    .padRadius(50)
+
+  console.log(widthA,heightA)
+  //combine
+  // var putSections = svgA.append("g").attr("transform", "translate(249,250)")
+  //   .selectAll("path").data(data)
+
+  svgA.selectAll('mysectors')
+      .data(data_ready)
+      .enter()
+      .append('path')
+      .attr("d", theSegment).attr("fill", "#66C2A5");
+
+
+  //putSections.enter().append("path").attr("d",theSegment).attr("fill",
+  //function(d){return addColor(d.data.amount)});
+  // putSections.enter().append("path")
+  // //make text appera
+  // var text = d3.select("g").selectAll("text").data(data);
+  // text.enter().append("text").each(function (d) {
+  //   var center = theSegment.centroid(d);
+  //   d3.select(this).attr("x", center[0]).attr("y", center[1]).text(d.data.amount)
+  // })
   drawC();
+  drawB();
   drawD();
 }
 
@@ -190,7 +252,7 @@ function drawC() {
 
   console.log(min, max);
 
-  var size = d3.scaleLinear().domain([min, max]).range([7, 55]);
+  var size = d3.scaleLinear().domain([min, max]).range([7, 35]);
 
   var hovertip = d3
     .select("body")
@@ -207,38 +269,37 @@ function drawC() {
 
   svgC.select("g").remove();
 
-  var node = svgC
-    .append("g")
-    .selectAll("circle")
-    .data(foodData)
-    .enter()
-    .append("circle")
-    .attr("class", "node")
-    .attr("r", (d) => size(+d[attrNutrient]))
-    .attr("cx", widthC / 2)
-    .attr("cy", heightC / 2)
-    .style("fill", (d) => color(d.Description))
-    .style("fill-opacity", 0.9)
-    .style("stroke-width", 1)
-    .on("mouseover", function (d, i) {
-      hovertip.html(`<b>${d.Description}</b><br>${+d[attrNutrient]}`);
-      hovertip.style("visibility", "visible");
-    })
-    .on("mousemove", function (d, i) {
-      hovertip
-        .style("top", d3.event.pageY - 10 + "px")
-        .style("left", d3.event.pageX + 10 + "px");
-    })
-    .on("mouseout", function (d, i) {
-      hovertip.style("visibility", "hidden");
-    })
-    .call(
-      d3
-        .drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended)
-    );
+  var node = svgC.append("g")
+          .selectAll("circle")
+          .data(foodData)
+          .enter()
+          .append("circle")
+          .attr("class", "node")
+          .attr("r", (d) => size(+d[attrNutrient]))
+          .attr("cx", widthC / 2)
+          .attr("cy", heightC / 2)
+          .style("fill", (d) => color(d.Description))
+          .style("fill-opacity", 0.9)
+          .style("stroke-width", 1)
+          .on("mouseover", function (d, i) {
+            hovertip.html(`<b>${d.Description}</b><br>${+d[attrNutrient]}`);
+            hovertip.style("visibility", "visible");
+          })
+          .on("mousemove", function (d, i) {
+            hovertip
+              .style("top", d3.event.pageY - 10 + "px")
+              .style("left", d3.event.pageX + 10 + "px");
+          })
+          .on("mouseout", function (d, i) {
+            hovertip.style("visibility", "hidden");
+          })
+          .call(
+            d3
+              .drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended)
+          );
 
   var simulation = d3
     .forceSimulation()
@@ -288,6 +349,22 @@ function drawC() {
     d.fx = null;
     d.fy = null;
   }
+
+  svgE.selectAll('g').remove();
+
+  var widthE = svgE.node().clientWidth;
+
+  // add text to svg E
+  var glyph = svgE.append('g')
+        .attr('transform',`translate(${widthE/2},40)`)
+
+    glyph.append('text')
+    .style('text-anchor', 'middle')
+    .style('alignment-baseline', 'middle')
+    .attr('font-size', 30 + 'px')
+    .attr('fill', 'black')
+    .style("font-weight", "bold")
+    .text(attrNutrient);
 }
 
 function drawB() {
@@ -367,4 +444,4 @@ function drawB() {
   svgB.node();
 }
 
-function drawD() {}
+function drawD() { }
