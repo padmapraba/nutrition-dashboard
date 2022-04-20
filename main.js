@@ -1,4 +1,4 @@
-var svgA, svgB, svgC, svgD, svgE;
+var svgA, svgB, svgC, svgD, svgE, svgD1;
 var width, height, innerHeight, innerWidth;
 var margin = { top: 50, right: 60, bottom: 60, left: 100 };
 var ingredients_data, descrip_data, attrFoodType, attrFoodItem, attrNutrient;
@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   svgB = d3.select("#B");
   svgC = d3.select("#C");
   svgD = d3.select("#D");
-  svgE = d3.select("#E")
+  svgE = d3.select("#E");
+  svgD1 = d3.select("#D #F");
 
   width = +svgA.style("width").replace("px", "");
   height = +svgA.style("height").replace("px", "");
