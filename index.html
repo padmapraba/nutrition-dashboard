@@ -3,24 +3,41 @@
 
 <head>
   <meta charset='utf-8'>
-  <title>CSE 494 - Spring 2022 - Homework #4</title>
+  <title>Nutrition Dashboard</title>
   <link rel='stylesheet' href='css/style.css'>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" /> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/> 
   <script src='https://d3js.org/d3.v5.min.js'></script>
   <script src='main.js'></script>
 </head>
 
 <body>
   <div id='wrapper'>
-    <!-- <h2>Homework #4: GapMinder Scatterplot</h2>
-    <h3>Padma Prabagaran - pprabaga@asu.edu - 1215553144</h3> -->
-    <!-- <hr style='width:100%'> -->
     <h1>Nutrition Dashboard</h1>
     <div class="row"></div>
+    
+   <!-- <div class="container">
+     <div class="f-group">
+       <label for="">Country</label>
+       <select name="slct1" id="slct1" onchange="populate(this.id,'slct2')">
+         <option value=""> -- choose country --</option>
+         <option value="india">India</option>
+         <option value="america">America</option>
+       </select>
+     </div>
+
+     <div class="f-group">
+       <label for="">City</label>
+       <select name="slct2" id="slct2"></select>
+     </div>
+   </div> -->
+
    
 
+      <br>
+
     &nbsp;Food Type:&nbsp;
-    <select id='attribute-select-type' onchange='drawA();'>
+    <select id='type' onchange="populate(this.id,'item')" onchange='drawA();'>
+      <option value="">-- Choose --</option>
       <option value='Cheese'>Cheese</option>
       <option value='Salad dressing'>Salad dressing</option>
       <option value='Cereals'>Cereals</option>
@@ -30,19 +47,12 @@
     </select>
  
     &nbsp;Food Item&nbsp;
-    <select id='attribute-select-item' onchange='drawA();'>
-      <option value='Blue'>Blue Cheese</option> 
-      <option value='Urban Development.Urban Population Percent'>Urban Population</option> 
-      <option value='Infrastructure.Mobile Cellular Subscriptions per 100 People'>Mobile Subscriptions</option>
-      <option value='Rural Development.Rural Population'>Rural Population</option>
-      <option value='Health.Death Rate'>Death Rate</option>
-      <option value='Health.Birth Rate'>Birth Rate</option>
-      <option value='Health.Life Expectancy at Birth, Total'>Life Expectancy</option>
-      <option value='Health.Fertility Rate'>Fertility Rate</option>
+    <select id='item' onchange='drawA();'>
+      <option value="">-- Choose --</option>
     </select>
 
     &nbsp;Nutrient:&nbsp;
-    <select id='attribute-select-nutr' onchange='drawC();'>
+    <select id='nutr' onchange='drawC();'>
       <option value='Protein'>Protein</option>
       <option value='Alpha Carotene'>Alpha Carotene</option>
       <option value='Beta Carotene'>Beta Carotene</option>
@@ -53,126 +63,41 @@
       <option value='Lipids'>Lipids</option>
       <option value='Zinc'>Zinc</option>
       <option value='Sodium'>Sodium</option>
-      
-<section class="performance-facts">
-  <header class="performance-facts__header">
-    <h1 class="performance-facts__title">Nutrition Facts</h1>
-    <p>Serving Size
-        </header>
-  <table class="performance-facts__table">
-    <thead>
-      <tr>
-        <th colspan="3" class="small-info">
-          Amount Per Serving
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <b>Calories</b>
-          200
-        </th>
-        <td>
-          Calories from Fat
-          130
-        </td>
-      </tr>
-      <tr class="thick-row">
-        <td colspan="3" class="small-info">
-          
-          <b>Total Fat</b>
-          14g
-        </th>
-        <td>
-          <b>47%</b>
-        </td>
-      </tr>
-      <tr>
-        <td class="blank-cell">
-        </td>
-        <th>
-          Saturated Fat
-          9g
-        </th>
-        <td>
-          <b>22%</b>
-        </td>
-      </tr>
-      <tr>
-        <td class="blank-cell">
-        </td>
-        <th>
-          Trans Fat
-          0g
-        </th>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <th colspan="2">
-          <b>Cholesterol</b>
-          55mg
-        </th>
-        <td>
-          <b>18%</b>
-        </td>
-      </tr>
-      <tr>
-        <th colspan="2">
-          <b>Sodium</b>
-          40mg
-        </th>
-        <td>
-          <b>2%</b>
-        </td>
-      </tr>
-      <tr>
-        <th colspan="2">
-          <b>Total Carbohydrate</b>
-          17g
-        </th>
-        <td>
-          <b>6%</b>
-        </td>
-      </tr>
-      <tr>
-        <td class="blank-cell">
-        </td>
-        <th>
-          Dietary Fiber
-          1g
-        </th>
-        <td>
-          <b>4%</b>
-        </td>
-      </tr>
-      <tr>
-        <td class="blank-cell">
-        </td>
-        <th>
-          Sugars
-          14g
-        </th>
-        <td>
-        </td>
-      </tr>
-      <tr class="thick-end">
-        <th colspan="2">
-          <b>Protein</b>
-          3g
-        </th>
-        <td>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-      
-</section>
-
-      
     </select>
+
+    <script>
+      function populate(s1,s2){
+        var s1 = document.getElementById(s1);
+        var s2 = document.getElementById(s2);
+
+        s2.innerHTML = "";
+        if(s1.value == "Cheese"){
+          var options = ['Blue','Brie','Camembert','Cheddar','Colby','Cottage','Cream Cheese','Feta','Gouda','Gruyere','Limburger','Monterey','Mozzarella','Muenster','Parmesan','Provolone','Ricotta','Swiss'];
+        }else if(s1.value == 'Salad dressing'){
+          var options = ['Mayonnaise Dressing','Russian dressing','Sesame seed dressing',"Thousand Island",'French dressing','Italian dressing','Blue cheese dressing','Caesar','Coleslaw','Green Goddess'];
+        }else if(s1.value == 'Cereals'){
+          var options = ["Apple Jacks","Cap'N Crunch","Cheerios","Cocoa Krispies", "Cocoa Pebbles",'Cookie Crisp','Corn Flakes',"Cracklin' Oat Bran",'Froot Loops','Fruity Pebbles',	'Golden Grahams',	'Honey Nut Cheerios',	'Lucky Charms',	'Raisin Bran',	'Rice Krispies',	'Special K',	'Corn Pops',	'Frosted Flakes',	'Trix',	'Wheaties'];
+
+        }else if(s1.value == 'Fruits'){
+          var options = ['Bananas',	'Blackberries',	'Apples',	'Apricots',	'Cherries',	'Cranberries','Figs',	'Grapefruit',	'Grapes',	'Guavas',	'Kiwifruit',	'Kumquats',	'Lemons',	'Mangos',	'Cantaloupe',	'Honeydew',	'Nectarines'];
+
+        }else if(s1.value == 'Pie'){
+            var options = ['Apple',	'Banana Cream',	'Blueberry',	'Cherry',	'Chocolate Creme',	'Coconut Creme',	'Egg custard',	'Lemon Meringue',	'Peach',	'Pecan',	'Pumpkin',	'Vanilla Cream'];
+        }
+
+        for(var op in options){
+          var pair = options[op];
+          var newopt = document.createElement('option');
+          
+          newopt.value = pair;
+          newopt.innerHTML= pair;
+          s2.options.add(newopt);
+        }
+        
+      }
+
+   </script>
+
     <br />
     <br />
     <br>

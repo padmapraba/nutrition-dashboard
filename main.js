@@ -5,6 +5,8 @@ var ingredients_data, descrip_data, attrFoodType, attrFoodItem, attrNutrient;
 var fact;
 var xScale, yScale, plot, back;
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
   svgA = d3.select("#A");
   svgB = d3.select("#B");
@@ -63,10 +65,10 @@ function drawA() {
   //   { type: "fats", amount:  10},
   // ];
 
-  var info = {carbs: 60, proteins: 20, vitamin: 5, mineral: 5, fats:10}
+  var info = { carbs: 60, proteins: 20, vitamin: 5, mineral: 5, fats: 10 }
   console.log(info)
   // var data = d3.pie().sort(null).value(function (d) { return d.amount; })(info);
-  var pie = d3.pie().value(function(d) {return d.value;})
+  var pie = d3.pie().value(function (d) { return d.value; })
   var data_ready = pie(d3.entries(info))
   // console.log(data);
   //make arc
@@ -76,16 +78,16 @@ function drawA() {
     .padAngle(.05)
     .padRadius(50)
 
-  console.log(widthA,heightA)
+  console.log(widthA, heightA)
   //combine
   // var putSections = svgA.append("g").attr("transform", "translate(249,250)")
   //   .selectAll("path").data(data)
 
   svgA.selectAll('mysectors')
-      .data(data_ready)
-      .enter()
-      .append('path')
-      .attr("d", theSegment).attr("fill", "#66C2A5");
+    .data(data_ready)
+    .enter()
+    .append('path')
+    .attr("d", theSegment).attr("fill", "#66C2A5");
 
 
   //putSections.enter().append("path").attr("d",theSegment).attr("fill",
@@ -103,9 +105,9 @@ function drawA() {
 }
 
 function drawC() {
-  attrFoodType = d3.select("#attribute-select-type").property("value");
-  attrNutrient = d3.select("#attribute-select-nutr").property("value");
-  attrFoodItem = d3.select("#attribute-select-item").property("value");
+  attrFoodType = d3.select("#type").property("value");
+  attrNutrient = d3.select("#nutr").property("value");
+  attrFoodItem = d3.select("#item").property("value");
   attrFoodItem = "blue";
 
   var widthC = svgC.node().clientWidth;
@@ -271,36 +273,36 @@ function drawC() {
   svgC.select("g").remove();
 
   var node = svgC.append("g")
-          .selectAll("circle")
-          .data(foodData)
-          .enter()
-          .append("circle")
-          .attr("class", "node")
-          .attr("r", (d) => size(+d[attrNutrient]))
-          .attr("cx", widthC / 2)
-          .attr("cy", heightC / 2)
-          .style("fill", (d) => color(d.Description))
-          .style("fill-opacity", 0.9)
-          .style("stroke-width", 1)
-          .on("mouseover", function (d, i) {
-            hovertip.html(`<b>${d.Description}</b><br>${+d[attrNutrient]}`);
-            hovertip.style("visibility", "visible");
-          })
-          .on("mousemove", function (d, i) {
-            hovertip
-              .style("top", d3.event.pageY - 10 + "px")
-              .style("left", d3.event.pageX + 10 + "px");
-          })
-          .on("mouseout", function (d, i) {
-            hovertip.style("visibility", "hidden");
-          })
-          .call(
-            d3
-              .drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended)
-          );
+    .selectAll("circle")
+    .data(foodData)
+    .enter()
+    .append("circle")
+    .attr("class", "node")
+    .attr("r", (d) => size(+d[attrNutrient]))
+    .attr("cx", widthC / 2)
+    .attr("cy", heightC / 2)
+    .style("fill", (d) => color(d.Description))
+    .style("fill-opacity", 0.9)
+    .style("stroke-width", 1)
+    .on("mouseover", function (d, i) {
+      hovertip.html(`<b>${d.Description}</b><br>${+d[attrNutrient]}`);
+      hovertip.style("visibility", "visible");
+    })
+    .on("mousemove", function (d, i) {
+      hovertip
+        .style("top", d3.event.pageY - 10 + "px")
+        .style("left", d3.event.pageX + 10 + "px");
+    })
+    .on("mouseout", function (d, i) {
+      hovertip.style("visibility", "hidden");
+    })
+    .call(
+      d3
+        .drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
+    );
 
   var simulation = d3
     .forceSimulation()
@@ -357,9 +359,9 @@ function drawC() {
 
   // add text to svg E
   var glyph = svgE.append('g')
-        .attr('transform',`translate(${widthE/2},40)`)
+    .attr('transform', `translate(${widthE / 2},40)`)
 
-    glyph.append('text')
+  glyph.append('text')
     .style('text-anchor', 'middle')
     .style('alignment-baseline', 'middle')
     .attr('font-size', 30 + 'px')
@@ -369,7 +371,7 @@ function drawC() {
 }
 
 function drawB() {
-  const margin = { top: 50, bottom: 50, left: 50, right: 50 };
+  const margin = { top: 50, bottom: 50, left: 70, right: 50 };
   const FIELDS_TO_SHOW = {
     Fats: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
     Carbohydrates: ["Sugar Total"],
@@ -384,9 +386,9 @@ function drawB() {
     ],
   };
 
-  attrFoodType = d3.select("#attribute-select-type").property("value");
-  attrFoodItem = d3.select("#attribute-select-item").property("value");
-  attrNutrient = d3.select("#attribute-select-nutr").property("value");
+  attrFoodType = d3.select("#type").property("value");
+  attrFoodItem = d3.select("#item").property("value");
+  attrNutrient = d3.select("#nutr").property("value");
 
   var width = svgB.node().clientWidth;
   var height = svgB.node().clientHeight;
@@ -445,4 +447,7 @@ function drawB() {
   svgB.node();
 }
 
-function drawD() { }
+function drawD() {
+
+
+}
