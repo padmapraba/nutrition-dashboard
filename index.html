@@ -15,28 +15,10 @@
     <h1>Nutrition Dashboard</h1>
     <div class="row"></div>
 
-    <!-- <div class="container">
-     <div class="f-group">
-       <label for="">Country</label>
-       <select name="slct1" id="slct1" onchange="populate(this.id,'slct2')">
-         <option value=""> -- choose country --</option>
-         <option value="india">India</option>
-         <option value="america">America</option>
-       </select>
-     </div>
-
-     <div class="f-group">
-       <label for="">City</label>
-       <select name="slct2" id="slct2"></select>
-     </div>
-   </div> -->
-
-
-
     <br>
 
     &nbsp;Food Type:&nbsp;
-    <select id='type' onchange="populate(this.id,'item')" onchange='drawA();'>
+    <select id='type' onchange="populate(this.id,'item')">
       <option value="">-- Choose --</option>
       <option value='Cheese'>Cheese</option>
       <option value='Salad dressing'>Salad dressing</option>
@@ -47,22 +29,42 @@
     </select>
 
     &nbsp;Food Item&nbsp;
-    <select id='item' onchange='drawA();'>
-      <option value="">-- Choose --</option>
+    <select id='item' onchange='drawC();'>
     </select>
 
     &nbsp;Nutrient:&nbsp;
     <select id='nutr' onchange='drawC();'>
+      <option value="">-- Choose --</option>
       <option value='Protein'>Protein</option>
+      <option value='Carbohydrate'>Carbohydrate</option>
+      <option value='Lipids'>Lipids</option>
+      <option value="Monosaturated Fats">Monosaturated Fats</option>
+      <option value="Polysaturated Fats">Polysaturated Fats</option>
+      <option value="Saturated Fats">Saturated Fats</option>
+
+      <option value='Zinc'>Zinc</option>
+      <option value='Sodium'>Sodium</option>
+      <option value="Calcium">Calcium</option>
+      <option value="Copper">Copper</option>
+      <option value="Iron">Iron</option>
+      <option value="Magnesium">Magnesium</option>
+      <option value="Phosphorus">Phosphorus</option>
+      <option value="Potassium">Potassium</option>
+
+      <option value="Vitamin A - RAE">Vitamin A</option>
+      <option value="Vitamin B12">Vitamin B12</option>
+      <option value="Vitamin B6">Vitamin B6</option>
+      <option value="Vitamin C">Vitamin C</option>
+      <option value="Vitamin E">Vitamin E</option>
+      <option value="Vitamin K">Vitamin K</option>
+
       <option value='Alpha Carotene'>Alpha Carotene</option>
       <option value='Beta Carotene'>Beta Carotene</option>
-      <option value='Carbohydrate'>Carbohydrate</option>
       <option value='Cholesterol'>Cholesterol</option>
       <option value='Fiber'>Fiber</option>
       <option value='Sugar Total'>Sugar</option>
-      <option value='Lipids'>Lipids</option>
-      <option value='Zinc'>Zinc</option>
-      <option value='Sodium'>Sodium</option>
+      
+      
     </select>
 
     <script>
@@ -96,6 +98,8 @@
           newopt.innerHTML = pair;
           s2.options.add(newopt);
         }
+
+        drawC();
 
       }
 
