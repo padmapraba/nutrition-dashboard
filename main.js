@@ -165,7 +165,7 @@ function drawC() {
 
   // console.log(min, max);
 
-  var size = d3.scaleLinear().domain([min, max]).range([7, 35]);
+  var size = d3.scaleLinear().domain([min, max]).range([7, 50]);
 
   var hovertip = d3
     .select("body")
