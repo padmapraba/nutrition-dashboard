@@ -3,6 +3,7 @@
 
 <head>
   <meta charset='utf-8'>
+  <br>
   <title>Nutrition Dashboard</title>
   <link rel='stylesheet' href='css/style.css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
@@ -63,14 +64,14 @@
       <option value='Cholesterol'>Cholesterol</option>
       <option value='Fiber'>Fiber</option>
       <option value='Sugar Total'>Sugar</option>
-      
-      
+
+
     </select>
 
     <script>
       var ingredients_data;
       function populate(s1, s2) {
-        var options =[];
+        var options = [];
         var s1 = document.getElementById(s1);
         var s2 = document.getElementById(s2);
 
@@ -78,14 +79,14 @@
           d3.csv("data/ingredients_edited.csv")]).then(function (values) {
             console.log("loaded data");
             ingredients_data = values[0];
-        })
+          })
 
         s2.innerHTML = "";
 
-        ingredients_data.forEach( d => {
-            if(d.Category == s1.value){
-              options.push(d.Description);
-            }
+        ingredients_data.forEach(d => {
+          if (d.Category == s1.value) {
+            options.push(d.Description);
+          }
         });
         console.log(options);
 
@@ -111,7 +112,8 @@
 
     <div class="row">
       <div class="column">
-        <svg id='D'></svg>
+        <svg id='D'>
+        </svg>
       </div>
       <div class="column">
 
