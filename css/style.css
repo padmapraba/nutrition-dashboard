@@ -44,20 +44,20 @@
 
   #D{
     border:1px solid rgb(0, 0, 0);
-    border-radius:10px;
+    /* border-radius:10px; */
     height:750px;
     width:400px;
     margin:5px;
 
   }
 
-  #D #F{
+  /* #D #F{
     border:1px solid rgb(0, 0, 0);
     border-radius:10px;
     height:300px;
     width:200px;
     margin:5px;
-  }
+  } */
 
 
   html {
