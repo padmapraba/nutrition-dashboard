@@ -8,6 +8,8 @@ var xScale, yScale, plot, back;
 colorScale = {
   'Protein': "#bf045b",
   'Carbohydrate': "#ff7f0e",
+  'Sugar Total': '#ff7f0e',
+  
   'Lipids': "#9467bd",
   "Monosaturated Fats": "#9467bd",
   "Polysaturated Fats": "#9467bd",
@@ -35,7 +37,7 @@ colorScale = {
   'Beta Carotene': 'orange red',
   'Cholesterol': 'teal',
   'Fiber': 'plum',
-  'Sugar Total': '#6495ED'
+  
 };
 
 var hovertip = d3
@@ -205,12 +207,15 @@ function drawA() {
 
 
 
-function drawC() {
+function drawC(key) {
   attrFoodType = d3.select("#type").property("value");
-  attrNutrient = d3.select("#nutr").property("value");
+  if(key){
+    attrNutrient = key;
+  }else{
+    attrNutrient = d3.select("#nutr").property("value");
+  }
   attrFoodItem = d3.select("#item").property("value");
-  // attrFoodItem = "blue";
-
+  
   var widthC = svgC.node().clientWidth;
   var heightC = svgC.node().clientHeight;
 
@@ -368,9 +373,10 @@ function drawB(key) {
   console.log("key:" + key);
 
   const margin = { top: 50, bottom: 50, left: 70, right: 50 };
+
   const FIELDS_TO_SHOW = {
-    Fats: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
-    Carbohydrates: ["Sugar Total"],
+    Lipids: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
+    Carbohydrate: ["Sugar Total"],
     Protein: ["Lycopene", "Niacin", "Thiamin"],
     Vitamins: [
       "Vitamin A - RAE",
@@ -380,6 +386,7 @@ function drawB(key) {
       "Vitamin E",
       "Vitamin K",
     ],
+    Minerals: ['Zinc', 'Sodium','Calcium','Copper','Iron','Magnesium','Phosphorus','Potassium']
   };
 
   attrFoodType = d3.select("#type").property("value");
@@ -392,11 +399,12 @@ function drawB(key) {
   var foodData = ingredients_data.filter(
     (d) => d.Category == attrFoodType && d.Description == attrFoodItem
   )[0];
+  console.log("food data", foodData);
 
   svgB.selectAll("g").remove();
-  foodData = FIELDS_TO_SHOW[attrNutrient].map((field) => ({
+  foodData = FIELDS_TO_SHOW[key].map((field) => ({
     name: field,
-    score: foodData[field],
+    score: +foodData[field],
   }));
 
   const x = d3
@@ -415,7 +423,7 @@ function drawB(key) {
 
   svgB
     .append("g")
-    .attr("fill", "royalblue")
+    .attr("fill", colorScale[key])
     .selectAll("rect")
     .data(foodData)
     .join("rect")
@@ -424,19 +432,44 @@ function drawB(key) {
     .attr("title", (d) => d.score)
     .attr("class", "rect")
     .attr("height", (d) => y(0) - y(d.score))
-    .attr("width", x.bandwidth());
+    .attr("width", x.bandwidth())
+    .on('click', function(d,i) {
+      console.log(`clicked ${d.name}`);
+
+      drawC(d.name);
+    
+    })
 
   function yAxis(g) {
     g.attr("transform", `translate(${margin.left}, 0)`)
       .call(d3.axisLeft(y).ticks(null, foodData.format))
-      .attr("font-size", "20px");
+      .attr("font-size", "15px");
   }
-
+if( key == 'Minerals' || key == 'Vitamins'){
   function xAxis(g) {
     g.attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
-      .attr("font-size", "20px");
+      .selectAll("text")                  
+      // .style("text-anchor", "end")     
+      // .attr("dx", "-10px")             
+      // .attr("dy", "0px")              
+      .attr("transform", "rotate(-10)" )
+      .attr("font-size", "10px")
   }
+}
+else{
+  function xAxis(g) {
+    g.attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
+      .selectAll("text")                  
+      // .style("text-anchor", "end")     
+      // .attr("dx", "-10px")             
+      // .attr("dy", "0px")              
+      // .attr("transform", "rotate(-10)" )
+      .attr("font-size", "10px")
+  }
+}
+  
 
   svgB.append("g").call(xAxis);
   svgB.append("g").call(yAxis);
@@ -444,6 +477,15 @@ function drawB(key) {
 }
 
 function drawD() {
-
+  svg.append('rect')
+                .attr('x','10')
+                .attr('y', '40')
+                .attr('width','15')
+                .attr('height','15')
+                .style('fill','#4363d8')
+            svg.append('text')
+                .attr('x','30')
+                .attr('y','54')
+                .text('Clairemont')
 
 }
