@@ -661,4 +661,66 @@ function drawD() {
     .attr("x2", 400)//left right width 
     .attr("y2", 364)
 
+    svgD.append('text')
+    .attr('x', '10')
+    .attr('y', '385')
+    .text('Sodium')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD.append('text')
+    .attr('x', '80')
+    .attr('y', '385')
+    .text('160mg')
+    .attr("font-size", "17px")
+
+    svgD.append('text')
+    .attr('x', '360')
+    .attr('y', '385')
+    .text('7%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 395)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 395)
+
+    svgD.append('text')
+    .attr('x', '30')
+    .attr('y', '415')
+    .text('Dietary Fiber 4g')
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '360')
+    .attr('y', '415')
+    .text('5%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 425)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 425)
+
+    svgD.append('text')
+    .attr('x', '30')
+    .attr('y', '445')
+    .text('Total Sugars 12g')
+    .attr("font-size", "15px")
+
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 200)
+    .attr("y1", 455)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 455)
 }
