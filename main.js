@@ -476,20 +476,21 @@ function drawB(key) {
 
 function drawD() {
   svgD.append('text')
-    .attr('x', '30')
+    .attr('x', '55')
     .attr('y', '54')
     .text('Nutrition Facts')
-    .attr("font-size", "50px")
+    .attr("font-size", "40px")
     .style('font-weight', 'bold')
 
   svgD.append('line')
-    .style("stroke", "darkgrey")
-    .style("stroke-width", 3)
-    .attr("x1", 10)
+    .style("stroke", "black")
+    .style("stroke-width", 5)
+    .attr("x", 10)
     .attr("y1", 70)
-    .attr("x2", 390)
+    .attr("x2", 400)
     .attr("y2", 70)
 
+    /////////////////////////////////////////////////
     svgD.append('text')
     .attr('x', '10')
     .attr('y', '88')
@@ -547,8 +548,117 @@ function drawD() {
     .attr("y1", 205)
     .attr("x2", 390)
     .attr("y2", 205)
-    
+    ///////////////////////////////////////////////
+    /////////////////daily value to cholesrol
+    svgD.append('text')
+    .attr('x', '55')
+    .attr('y', '54')
+    .text('% Daily Value*')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+    //lef right
+    .attr("x", 270)
+    //updown?
+    .attr("y", 230 )
 
-  
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 240)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 240)
+
+    svgD.append('text')
+    .attr('x', '10')
+    .attr('y', '260')
+    .text('Total Fat')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+
+    svgD.append('text')
+    .attr('x', '90')
+    .attr('y', '260')
+    .text('8g')
+    .attr("font-size", "17px")
+
+    svgD.append('text')
+    .attr('x', '350')
+    .attr('y', '260')
+    .text('10%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+    
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 270)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 270)
+
+    svgD.append('text')
+    .attr('x', '30')
+    .attr('y', '290')
+    .text('Saurated Fat 1g')
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '360')
+    .attr('y', '290')
+    .text('5%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 300)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 300)
+
+    svgD.append('text')
+    .attr('x', '30')
+    .attr('y', '320')
+    .text('Trans Fat 0g')
+    .attr("font-size", "15px")
+
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 330)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 330)
+
+    svgD.append('text')
+    .attr('x', '10')
+    .attr('y', '353')
+    .text('Cholesterol')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+ 
+    svgD.append('text')
+    .attr('x', '110')
+    .attr('y', '353')
+    .text('0mg')
+    .attr("font-size", "17px")
+
+    svgD.append('text')
+    .attr('x', '360')
+    .attr('y', '350')
+    .text('0%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+    
+    svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x", 567)
+    .attr("y1", 364)
+    .attr("x2", 400)//left right width 
+    .attr("y2", 364)
 
 }
