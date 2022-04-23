@@ -6,26 +6,26 @@ var fact, colorScale;
 var xScale, yScale, plot, back;
 
 colorScale = {
-  'Protein': "#bf045b",
-  'Carbohydrate': "#ff7f0e",
-  'Sugar Total': '#ff7f0e',
+  Protein: "#bf045b",
+  Carbohydrate: "#ff7f0e",
+  "Sugar Total": "#ff7f0e",
 
-  'Lipids': "#9467bd",
+  Lipids: "#9467bd",
   "Monosaturated Fats": "#9467bd",
   "Polysaturated Fats": "#9467bd",
   "Saturated Fats": "#9467bd",
 
-  'Minerals': "#d62728",
-  'Zinc': "#d62728",
-  'Sodium': "#d62728",
-  "Calcium": "#d62728",
-  "Copper": "#d62728",
-  "Iron": "#d62728",
-  "Magnesium": "#d62728",
-  "Phosphorus": "#d62728",
-  "Potassium": "#d62728",
+  Minerals: "#d62728",
+  Zinc: "#d62728",
+  Sodium: "#d62728",
+  Calcium: "#d62728",
+  Copper: "#d62728",
+  Iron: "#d62728",
+  Magnesium: "#d62728",
+  Phosphorus: "#d62728",
+  Potassium: "#d62728",
 
-  "Vitamins": "#2ca02c",
+  Vitamins: "#2ca02c",
   "Vitamin A - RAE": "#2ca02c",
   "Vitamin B12": "#2ca02c",
   "Vitamin B6": "#2ca02c",
@@ -33,11 +33,10 @@ colorScale = {
   "Vitamin E": "#2ca02c",
   "Vitamin K": "#2ca02c",
 
-  'Alpha Carotene': 'salmon',
-  'Beta Carotene': 'orange red',
-  'Cholesterol': 'teal',
-  'Fiber': 'plum',
-
+  "Alpha Carotene": "salmon",
+  "Beta Carotene": "orange red",
+  Cholesterol: "teal",
+  Fiber: "plum",
 };
 
 var hovertip = d3
@@ -60,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
   svgD = d3.select("#D");
   svgE = d3.select("#E");
 
-
   // Load files
   Promise.all([
     d3.csv("data/ingredients_edited.csv"),
-    d3.csv("data/descriptions.csv"), d3.csv('data/ingredients_mg.csv')
+    d3.csv("data/descriptions.csv"),
+    d3.csv("data/ingredients_mg.csv"),
   ]).then(function (values) {
     console.log("loaded data");
     ingredients_data = values[0];
@@ -77,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // data wrangling
 
-
     drawC();
   });
 });
@@ -89,19 +87,19 @@ function drawA() {
 
   console.log(attrFoodItem, attrFoodType, attrNutrient);
 
-  var width = 500
-  height = 350
-  margin = 40
+  var width = 500;
+  height = 350;
+  margin = 40;
 
-  var radius = Math.min(width, height) / 2 - margin
+  var radius = Math.min(width, height) / 2 - margin;
 
-  var svgA = d3.select("#A")
+  var svgA = d3
+    .select("#A")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
 
   var foodItem = [];
   ing_mg_data.forEach((element) => {
@@ -116,13 +114,19 @@ function drawA() {
     d.Lipids = +d.Lipids;
 
     // vitamins
-    d['Vitamin A - RAE'] = +d['Vitamin A - RAE'];
+    d["Vitamin A - RAE"] = +d["Vitamin A - RAE"];
     d["Vitamin B12"] = +d["Vitamin B12"];
     d["Vitamin B6"] = +d["Vitamin B6"];
     d["Vitamin C"] = +d["Vitamin C"];
     d["Vitamin E"] = +d["Vitamin E"];
     d["Vitamin K"] = +d["Vitamin K"];
-    d.Vitamins = d['Vitamin A - RAE'] + d["Vitamin B12"] + d["Vitamin B6"] + d["Vitamin C"] + d["Vitamin E"] + d["Vitamin K"];
+    d.Vitamins =
+      d["Vitamin A - RAE"] +
+      d["Vitamin B12"] +
+      d["Vitamin B6"] +
+      d["Vitamin C"] +
+      d["Vitamin E"] +
+      d["Vitamin K"];
 
     // minerals
     d.Zinc = +d.Zinc;
@@ -134,52 +138,66 @@ function drawA() {
     d.Phosphorus = +d.Phosphorus;
     d.Potassium = +d.Potassium;
 
-    d.Minerals = d.Zinc + d.Sodium + d.Calcium + d.Copper + d.Iron + d.Magnesium + d.Phosphorus + d.Potassium;
+    d.Minerals =
+      d.Zinc +
+      d.Sodium +
+      d.Calcium +
+      d.Copper +
+      d.Iron +
+      d.Magnesium +
+      d.Phosphorus +
+      d.Potassium;
   });
 
-  console.log(foodItem)
+  console.log(foodItem);
 
-  var data1 = { Protein: foodItem[0].Protein, Carbohydrate: foodItem[0].Carbohydrate, Lipids: foodItem[0].Lipids, Vitamins: foodItem[0].Vitamins, Minerals: foodItem[0].Minerals }
-  console.log(data1)
+  var data1 = {
+    Protein: foodItem[0].Protein,
+    Carbohydrate: foodItem[0].Carbohydrate,
+    Lipids: foodItem[0].Lipids,
+    Vitamins: foodItem[0].Vitamins,
+    Minerals: foodItem[0].Minerals,
+  };
+  console.log(data1);
 
-
-
-  var pie = d3.pie()
-    .value(function (d) { return d.value; })
-    .sort(function (x, y) { console.log(x); return d3.ascending(x.key, y.key); })
-  var finalData = pie(d3.entries(data1))
+  var pie = d3
+    .pie()
+    .value(function (d) {
+      return d.value;
+    })
+    .sort(function (x, y) {
+      console.log(x);
+      return d3.ascending(x.key, y.key);
+    });
+  var finalData = pie(d3.entries(data1));
 
   // map to data
-  var g = svgA.selectAll("path")
+  var g = svgA
+    .selectAll("path")
     .data(finalData)
     .enter()
-    .append('path')
-    .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
-    .attr('fill', function (d) { return (colorScale[d.data.key]) })
+    .append("path")
+    .attr("d", d3.arc().innerRadius(0).outerRadius(radius))
+    .attr("fill", function (d) {
+      return colorScale[d.data.key];
+    })
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
     .on("mouseover", function (d, i) {
-      d3.select(this).transition()
-        .duration('50')
-        .style('opacity', '.55');
+      d3.select(this).transition().duration("50").style("opacity", ".55");
 
-      console.log(d.data.key)
+      console.log(d.data.key);
     })
-    .on("mousemove", function (d, i) {
-
-    })
+    .on("mousemove", function (d, i) {})
     .on("mouseout", function (d, i) {
-      d3.select(this).transition()
-        .duration('50')
-        .style('opacity', '1');
+      d3.select(this).transition().duration("50").style("opacity", "1");
     })
-    .on('click', function (d, i) {
+    .on("click", function (d, i) {
       console.log(`clicked ${d.data.key}`);
 
       drawB(d.data.key);
-
-    })
+    });
 
   // g.enter()
   //   .append('path')
@@ -192,17 +210,13 @@ function drawA() {
   //   .style("stroke-width", "2px")
   //   .style("opacity", 1)
 
-
-
-  g.exit().remove()
+  g.exit().remove();
 
   drawC();
   // drawB();
-  console.log('done with B')
+  console.log("done with B");
   drawD();
 }
-
-
 
 function drawC(key) {
   attrFoodType = d3.select("#type").property("value");
@@ -232,7 +246,6 @@ function drawC(key) {
 
   // console.log(foodlist);
 
-
   let max = d3.max(foodData, (d) => +d[attrNutrient]);
   let min = d3.min(foodData, (d) => +d[attrNutrient]);
 
@@ -255,7 +268,8 @@ function drawC(key) {
 
   svgC.select("g").remove();
 
-  var node = svgC.append("g")
+  var node = svgC
+    .append("g")
     .selectAll("circle")
     .data(foodData)
     .enter()
@@ -265,7 +279,7 @@ function drawC(key) {
     .attr("cx", widthC / 2)
     .attr("cy", heightC / 2)
     // .style("fill", colorScale[attrNutrient])
-    .style('fill', d => fillCirc(d))
+    .style("fill", (d) => fillCirc(d))
     .style("fill-opacity", 0.9)
     .style("stroke-width", 1)
     .on("mouseover", function (d, i) {
@@ -337,34 +351,31 @@ function drawC(key) {
     d.fy = null;
   }
 
-  svgE.selectAll('g').remove();
+  svgE.selectAll("g").remove();
 
   var widthE = svgE.node().clientWidth;
 
   // add text to svg E
-  var glyph = svgE.append('g')
-    .attr('transform', `translate(${widthE / 2},40)`)
+  var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
 
-  glyph.append('text')
-    .style('text-anchor', 'middle')
-    .style('alignment-baseline', 'middle')
-    .attr('font-size', 30 + 'px')
-    .attr('fill', 'black')
+  glyph
+    .append("text")
+    .style("text-anchor", "middle")
+    .style("alignment-baseline", "middle")
+    .attr("font-size", 30 + "px")
+    .attr("fill", "black")
     .style("font-weight", "bold")
     .text(attrNutrient);
 
   function fillCirc(d) {
     // console.log(attrFoodItem);
     if (d.Description == attrFoodItem) {
-      return '#808080';
+      return "#808080";
     } else {
       return colorScale[attrNutrient];
     }
   }
-
 }
-
-
 
 function drawB(key) {
   console.log("key:" + key);
@@ -383,7 +394,16 @@ function drawB(key) {
       "Vitamin E",
       "Vitamin K",
     ],
-    Minerals: ['Zinc', 'Sodium', 'Calcium', 'Copper', 'Iron', 'Magnesium', 'Phosphorus', 'Potassium']
+    Minerals: [
+      "Zinc",
+      "Sodium",
+      "Calcium",
+      "Copper",
+      "Iron",
+      "Magnesium",
+      "Phosphorus",
+      "Potassium",
+    ],
   };
 
   attrFoodType = d3.select("#type").property("value");
@@ -430,297 +450,423 @@ function drawB(key) {
     .attr("class", "rect")
     .attr("height", (d) => y(0) - y(d.score))
     .attr("width", x.bandwidth())
-    .on('click', function (d, i) {
+    .on("click", function (d, i) {
       console.log(`clicked ${d.name}`);
 
       drawC(d.name);
-
-    })
+    });
 
   function yAxis(g) {
     g.attr("transform", `translate(${margin.left}, 0)`)
       .call(d3.axisLeft(y).ticks(null, foodData.format))
       .attr("font-size", "15px");
   }
-  if (key == 'Minerals' || key == 'Vitamins') {
+  if (key == "Minerals" || key == "Vitamins") {
     function xAxis(g) {
       g.attr("transform", `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
         .selectAll("text")
-        // .style("text-anchor", "end")     
-        // .attr("dx", "-10px")             
-        // .attr("dy", "0px")              
+        // .style("text-anchor", "end")
+        // .attr("dx", "-10px")
+        // .attr("dy", "0px")
         .attr("transform", "rotate(-10)")
-        .attr("font-size", "10px")
+        .attr("font-size", "10px");
     }
-  }
-  else {
+  } else {
     function xAxis(g) {
       g.attr("transform", `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
         .selectAll("text")
-        // .style("text-anchor", "end")     
-        // .attr("dx", "-10px")             
-        // .attr("dy", "0px")              
+        // .style("text-anchor", "end")
+        // .attr("dx", "-10px")
+        // .attr("dy", "0px")
         // .attr("transform", "rotate(-10)" )
-        .attr("font-size", "10px")
+        .attr("font-size", "10px");
     }
   }
-
 
   svgB.append("g").call(xAxis);
   svgB.append("g").call(yAxis);
   svgB.node();
-
 }
 
 function drawD() {
-  svgD.append('text')
-    .attr('x', '55')
-    .attr('y', '54')
-    .text('Nutrition Facts')
-    .attr("font-size", "40px")
-    .style('font-weight', 'bold')
+  svgD
+    .append("text")
+    .attr("x", "15")
+    .attr("y", "54")
+    .text("Nutrition Facts")
+    .attr("font-size", "55px")
+    .style("font-weight", "bold");
 
-  svgD.append('line')
-    .style("stroke", "black")
-    .style("stroke-width", 5)
-    .attr("x", 10)
+  svgD
+    .append("line")
+    .style("stroke", "grey")
+    .style("stroke-width", 3)
+    .attr("x1", 10)
     .attr("y1", 70)
-    .attr("x2", 400)
-    .attr("y2", 70)
+    .attr("x2", 390)
+    .attr("y2", 70);
 
-    /////////////////////////////////////////////////
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '88')
-    .text('8 serving per container')
-    .attr("font-size", "15px")
-    // .style('font-weight', 'bold')
+  /////////////////////////////////////////////////
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "88")
+    .text("8 serving per container")
+    .attr("font-size", "15px");
+  // .style('font-weight', 'bold')
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '105')
-    .text('Serving size')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "105")
+    .text("Serving size")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '275')
-    .attr('y', '105')
-    .text('2/3 cup (55g)')
+  svgD
+    .append("text")
+    .attr("x", "275")
+    .attr("y", "105")
+    .text("2/3 cup (55g)")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 20)
     .attr("x1", 10)
     .attr("y1", 125)
     .attr("x2", 390)
-    .attr("y2", 125)
+    .attr("y2", 125);
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '155')
-    .text('Amount per serving')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "155")
+    .text("Amount per serving")
     .attr("font-size", "15px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '190')
-    .text('Calories')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "190")
+    .text("Calories")
     .attr("font-size", "35px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '310')
-    .attr('y', '190')
-    .text('230')
+  svgD
+    .append("text")
+    .attr("x", "310")
+    .attr("y", "190")
+    .text("230")
     .attr("font-size", "40px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 10)
     .attr("x1", 10)
     .attr("y1", 205)
     .attr("x2", 390)
-    .attr("y2", 205)
-    ///////////////////////////////////////////////
-    /////////////////daily value to cholesrol
-    svgD.append('text')
-    .attr('x', '55')
-    .attr('y', '54')
-    .text('% Daily Value*')
+    .attr("y2", 205);
+  ///////////////////////////////////////////////
+  /////////////////daily value to cholesrol
+  svgD
+    .append("text")
+    .attr("x", "55")
+    .attr("y", "54")
+    .text("% Daily Value*")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold")
     //lef right
     .attr("x", 270)
     //updown?
-    .attr("y", 230 )
+    .attr("y", 230);
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 240)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 240)
+    .attr("x2", 390) //left right width
+    .attr("y2", 240);
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '260')
-    .text('Total Fat')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "260")
+    .text("Total Fat")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
+  svgD
+    .append("text")
+    .attr("x", "90")
+    .attr("y", "260")
+    .text("8g")
+    .attr("font-size", "17px");
 
-    svgD.append('text')
-    .attr('x', '90')
-    .attr('y', '260')
-    .text('8g')
+  svgD
+    .append("text")
+    .attr("x", "350")
+    .attr("y", "260")
+    .text("10%")
     .attr("font-size", "17px")
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '350')
-    .attr('y', '260')
-    .text('10%')
-    .attr("font-size", "17px")
-    .style('font-weight', 'bold')
-    
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 270)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 270)
+    .attr("x2", 390) //left right width
+    .attr("y2", 270);
 
-    svgD.append('text')
-    .attr('x', '30')
-    .attr('y', '290')
-    .text('Saurated Fat 1g')
-    .attr("font-size", "15px")
+  svgD
+    .append("text")
+    .attr("x", "30")
+    .attr("y", "290")
+    .text("Saurated Fat 1g")
+    .attr("font-size", "15px");
 
-    svgD.append('text')
-    .attr('x', '360')
-    .attr('y', '290')
-    .text('5%')
+  svgD
+    .append("text")
+    .attr("x", "360")
+    .attr("y", "290")
+    .text("5%")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 300)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 300)
+    .attr("x2", 390) //left right width
+    .attr("y2", 300);
 
-    svgD.append('text')
-    .attr('x', '30')
-    .attr('y', '320')
-    .text('Trans Fat 0g')
-    .attr("font-size", "15px")
+  svgD
+    .append("text")
+    .attr("x", "30")
+    .attr("y", "320")
+    .text("Trans Fat 0g")
+    .attr("font-size", "15px");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 330)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 330)
+    .attr("x2", 390) //left right width
+    .attr("y2", 330);
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '353')
-    .text('Cholesterol')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "353")
+    .text("Cholesterol")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
- 
-    svgD.append('text')
-    .attr('x', '110')
-    .attr('y', '353')
-    .text('0mg')
-    .attr("font-size", "17px")
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '360')
-    .attr('y', '350')
-    .text('0%')
+  svgD
+    .append("text")
+    .attr("x", "110")
+    .attr("y", "353")
+    .text("0mg")
+    .attr("font-size", "17px");
+
+  svgD
+    .append("text")
+    .attr("x", "360")
+    .attr("y", "350")
+    .text("0%")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
-    
-    svgD.append('line')
+    .style("font-weight", "bold");
+
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 364)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 364)
+    .attr("x2", 390) //left right width
+    .attr("y2", 364);
 
-    svgD.append('text')
-    .attr('x', '10')
-    .attr('y', '385')
-    .text('Sodium')
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "385")
+    .text("Sodium")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '80')
-    .attr('y', '385')
-    .text('160mg')
+  svgD
+    .append("text")
+    .attr("x", "80")
+    .attr("y", "385")
+    .text("160mg")
+    .attr("font-size", "17px");
+
+  svgD
+    .append("text")
+    .attr("x", "360")
+    .attr("y", "385")
+    .text("7%")
     .attr("font-size", "17px")
+    .style("font-weight", "bold");
 
-    svgD.append('text')
-    .attr('x', '360')
-    .attr('y', '385')
-    .text('7%')
-    .attr("font-size", "17px")
-    .style('font-weight', 'bold')
-
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 395)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 395)
+    .attr("x2", 390) //left right width
+    .attr("y2", 395);
 
-    svgD.append('text')
-    .attr('x', '30')
-    .attr('y', '415')
-    .text('Dietary Fiber 4g')
-    .attr("font-size", "15px")
+  svgD
+    .append("text")
+    .attr("x", "30")
+    .attr("y", "415")
+    .text("Dietary Fiber 4g")
+    .attr("font-size", "15px");
 
-    svgD.append('text')
-    .attr('x', '360')
-    .attr('y', '415')
-    .text('5%')
+  svgD
+    .append("text")
+    .attr("x", "360")
+    .attr("y", "415")
+    .text("5%")
     .attr("font-size", "17px")
-    .style('font-weight', 'bold')
+    .style("font-weight", "bold");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 567)
+    .attr("x1", 10)
     .attr("y1", 425)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 425)
+    .attr("x2", 390) //left right width
+    .attr("y2", 425);
 
-    svgD.append('text')
-    .attr('x', '30')
-    .attr('y', '445')
-    .text('Total Sugars 12g')
-    .attr("font-size", "15px")
+  svgD
+    .append("text")
+    .attr("x", "30")
+    .attr("y", "445")
+    .text("Total Sugars 12g")
+    .attr("font-size", "15px");
 
-    svgD.append('line')
+  svgD
+    .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x", 200)
+    .attr("x1", 10)
     .attr("y1", 455)
-    .attr("x2", 400)//left right width 
-    .attr("y2", 455)
+    .attr("x2", 390) //left right width
+    .attr("y2", 455);
+
+  svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 20)
+    .attr("x1", 10)
+    .attr("y1", 560)
+    .attr("x2", 390)
+    .attr("y2", 560);
+
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "590")
+    .text("Vitamin D")
+    .attr("font-size", "17px")
+    .style("font-weight", "normal");
+
+  svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 10)
+    .attr("y1", 595)
+    .attr("x2", 390)
+    .attr("y2", 595);
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "615")
+    .text("Calcium")
+    .attr("font-size", "17px")
+    .style("font-weight", "normal");
+
+  svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 10)
+    .attr("y1", 620)
+    .attr("x2", 390)
+    .attr("y2", 620);
+
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "640")
+    .text("Iron")
+    .attr("font-size", "17px")
+    .style("font-weight", "normal");
+
+  svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 10)
+    .attr("y1", 645)
+    .attr("x2", 390)
+    .attr("y2", 645);
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "665")
+    .text("Potassium")
+    .attr("font-size", "17px")
+    .style("font-weight", "normal");
+
+  svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 10)
+    .attr("x1", 10)
+    .attr("y1", 675)
+    .attr("x2", 390)
+    .attr("y2", 675);
+
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "703")
+    .text("The % Daily Value(DV) tells you how much a nutrient in")
+    .attr("font-size", "15px")
+    .style("font-weight", "normal");
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "719")
+    .text("a serving of food contributes to a daily diet. 2,000")
+    .attr("font-size", "15px")
+    .style("font-weight", "normal");
+  svgD
+    .append("text")
+    .attr("x", "10")
+    .attr("y", "734")
+    .text(" calories a day is used for general nutritional advice.")
+    .attr("font-size", "15px")
+    .style("font-weight", "normal");
 }
