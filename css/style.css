@@ -1,6 +1,7 @@
   #wrapper {
     margin:auto;
     width:1440px;
+    text-align: center;
   }
   input {
     width:50px;
@@ -22,6 +23,7 @@
     margin:5px;
 
   }
+
 
   #C{
     border:1px solid rgb(0, 0, 0);

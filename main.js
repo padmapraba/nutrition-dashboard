@@ -9,7 +9,7 @@ colorScale = {
   'Protein': "#bf045b",
   'Carbohydrate': "#ff7f0e",
   'Sugar Total': '#ff7f0e',
-  
+
   'Lipids': "#9467bd",
   "Monosaturated Fats": "#9467bd",
   "Polysaturated Fats": "#9467bd",
@@ -37,21 +37,21 @@ colorScale = {
   'Beta Carotene': 'orange red',
   'Cholesterol': 'teal',
   'Fiber': 'plum',
-  
+
 };
 
 var hovertip = d3
-    .select("body")
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
-    .style("background", "white")
-    .style("padding", 3 + "px")
-    .style("margin", 5 + "px")
-    .style("border-radius", 5 + "px")
-    .style("border", 1 + "px solid black")
-    .style("font-size", 15 + "px");
+  .select("body")
+  .append("div")
+  .style("position", "absolute")
+  .style("z-index", "10")
+  .style("visibility", "hidden")
+  .style("background", "white")
+  .style("padding", 3 + "px")
+  .style("margin", 5 + "px")
+  .style("border-radius", 5 + "px")
+  .style("border", 1 + "px solid black")
+  .style("font-size", 15 + "px");
 
 document.addEventListener("DOMContentLoaded", () => {
   // svgA = d3.select("#A");
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   svgC = d3.select("#C");
   svgD = d3.select("#D");
   svgE = d3.select("#E");
- 
+
 
   // Load files
   Promise.all([
@@ -87,7 +87,7 @@ function drawA() {
   attrNutrient = d3.select("#nutr").property("value");
   attrFoodItem = d3.select("#item").property("value");
 
-  console.log(attrFoodItem,attrFoodType,attrNutrient);
+  console.log(attrFoodItem, attrFoodType, attrNutrient);
 
   var width = 500
   height = 350
@@ -110,7 +110,7 @@ function drawA() {
     }
   });
 
-  foodItem.forEach(function(d) {
+  foodItem.forEach(function (d) {
     d.Protein = +d.Protein;
     d.Carbohydrate = +d.Carbohydrate;
     d.Lipids = +d.Lipids;
@@ -139,69 +139,66 @@ function drawA() {
 
   console.log(foodItem)
 
-  var data1 = {Protein: foodItem[0].Protein, Carbohydrate: foodItem[0].Carbohydrate, Lipids: foodItem[0].Lipids, Vitamins: foodItem[0].Vitamins, Minerals: foodItem[0].Minerals}
+  var data1 = { Protein: foodItem[0].Protein, Carbohydrate: foodItem[0].Carbohydrate, Lipids: foodItem[0].Lipids, Vitamins: foodItem[0].Vitamins, Minerals: foodItem[0].Minerals }
   console.log(data1)
 
 
 
-    var pie = d3.pie()
-      .value(function (d) { return d.value; })
-      .sort(function (x, y) { console.log(x); return d3.ascending(x.key, y.key); }) 
-    var finalData = pie(d3.entries(data1))
+  var pie = d3.pie()
+    .value(function (d) { return d.value; })
+    .sort(function (x, y) { console.log(x); return d3.ascending(x.key, y.key); })
+  var finalData = pie(d3.entries(data1))
 
-    // map to data
-    var g = svgA.selectAll("path")
-      .data(finalData)
-      .enter()
-      .append('path')
-      .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
-      .attr('fill', function (d) { return (colorScale[d.data.key]) })
-      .attr("stroke", "white")
-      .style("stroke-width", "2px")
-      .style("opacity", 1)
-      .on("mouseover", function (d, i) {
-        d3.select(this).transition()
-               .duration('50')
-               .style('opacity', '.55');
+  // map to data
+  var g = svgA.selectAll("path")
+    .data(finalData)
+    .enter()
+    .append('path')
+    .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
+    .attr('fill', function (d) { return (colorScale[d.data.key]) })
+    .attr("stroke", "white")
+    .style("stroke-width", "2px")
+    .style("opacity", 1)
+    .on("mouseover", function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+        .style('opacity', '.55');
 
-        console.log(d.data.key)
-      })
-      .on("mousemove", function (d, i) {
-        
-      })
-      .on("mouseout", function (d, i) {
-        d3.select(this).transition()
-               .duration('50')
-               .style('opacity', '1');
-      })
-      .on('click', function(d,i) {
-        console.log(`clicked ${d.data.key}`);
+      console.log(d.data.key)
+    })
+    .on("mousemove", function (d, i) {
 
-        drawB(d.data.key);
-      
-      })
+    })
+    .on("mouseout", function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+        .style('opacity', '1');
+    })
+    .on('click', function (d, i) {
+      console.log(`clicked ${d.data.key}`);
 
-    // g.enter()
-    //   .append('path')
-    //   // .merge(g)
-    //   .transition()
-    //   .duration(1000)
-    //   .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
-    //   .attr('fill', function (d) { return (colorScale[d.data.key]) })
-    //   .attr("stroke", "white")
-    //   .style("stroke-width", "2px")
-    //   .style("opacity", 1)
-      
+      drawB(d.data.key);
+
+    })
+
+  // g.enter()
+  //   .append('path')
+  //   // .merge(g)
+  //   .transition()
+  //   .duration(1000)
+  //   .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
+  //   .attr('fill', function (d) { return (colorScale[d.data.key]) })
+  //   .attr("stroke", "white")
+  //   .style("stroke-width", "2px")
+  //   .style("opacity", 1)
 
 
-    g.exit().remove()
 
-// }
-
-  // update(data1)
+  g.exit().remove()
 
   drawC();
-  drawB();
+  // drawB();
+  console.log('done with B')
   drawD();
 }
 
@@ -209,13 +206,13 @@ function drawA() {
 
 function drawC(key) {
   attrFoodType = d3.select("#type").property("value");
-  if(key){
+  if (key) {
     attrNutrient = key;
-  }else{
+  } else {
     attrNutrient = d3.select("#nutr").property("value");
   }
   attrFoodItem = d3.select("#item").property("value");
-  
+
   var widthC = svgC.node().clientWidth;
   var heightC = svgC.node().clientHeight;
 
@@ -386,7 +383,7 @@ function drawB(key) {
       "Vitamin E",
       "Vitamin K",
     ],
-    Minerals: ['Zinc', 'Sodium','Calcium','Copper','Iron','Magnesium','Phosphorus','Potassium']
+    Minerals: ['Zinc', 'Sodium', 'Calcium', 'Copper', 'Iron', 'Magnesium', 'Phosphorus', 'Potassium']
   };
 
   attrFoodType = d3.select("#type").property("value");
@@ -433,11 +430,11 @@ function drawB(key) {
     .attr("class", "rect")
     .attr("height", (d) => y(0) - y(d.score))
     .attr("width", x.bandwidth())
-    .on('click', function(d,i) {
+    .on('click', function (d, i) {
       console.log(`clicked ${d.name}`);
 
       drawC(d.name);
-    
+
     })
 
   function yAxis(g) {
@@ -445,47 +442,61 @@ function drawB(key) {
       .call(d3.axisLeft(y).ticks(null, foodData.format))
       .attr("font-size", "15px");
   }
-if( key == 'Minerals' || key == 'Vitamins'){
-  function xAxis(g) {
-    g.attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
-      .selectAll("text")                  
-      // .style("text-anchor", "end")     
-      // .attr("dx", "-10px")             
-      // .attr("dy", "0px")              
-      .attr("transform", "rotate(-10)" )
-      .attr("font-size", "10px")
+  if (key == 'Minerals' || key == 'Vitamins') {
+    function xAxis(g) {
+      g.attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
+        .selectAll("text")
+        // .style("text-anchor", "end")     
+        // .attr("dx", "-10px")             
+        // .attr("dy", "0px")              
+        .attr("transform", "rotate(-10)")
+        .attr("font-size", "10px")
+    }
   }
-}
-else{
-  function xAxis(g) {
-    g.attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
-      .selectAll("text")                  
-      // .style("text-anchor", "end")     
-      // .attr("dx", "-10px")             
-      // .attr("dy", "0px")              
-      // .attr("transform", "rotate(-10)" )
-      .attr("font-size", "10px")
+  else {
+    function xAxis(g) {
+      g.attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
+        .selectAll("text")
+        // .style("text-anchor", "end")     
+        // .attr("dx", "-10px")             
+        // .attr("dy", "0px")              
+        // .attr("transform", "rotate(-10)" )
+        .attr("font-size", "10px")
+    }
   }
-}
-  
+
 
   svgB.append("g").call(xAxis);
   svgB.append("g").call(yAxis);
   svgB.node();
+
 }
 
 function drawD() {
-  svg.append('rect')
-                .attr('x','10')
-                .attr('y', '40')
-                .attr('width','15')
-                .attr('height','15')
-                .style('fill','#4363d8')
-            svg.append('text')
-                .attr('x','30')
-                .attr('y','54')
-                .text('Clairemont')
+  svgD.append('text')
+    .attr('x', '55')
+    .attr('y', '54')
+    .text('Nutrition Facts')
+    .attr("font-size", "40px")
+    .style('font-weight', 'bold')
+
+  svgD.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 5)
+    .attr("x", 10)
+    .attr("y1", 70)
+    .attr("x2", 400)
+    .attr("y2", 70)
+    
+
+  // svgD.append('rect')
+  //   .attr('x', '')
+  //   .attr('y', '40')
+  //   .attr('width', '15')
+  //   .attr('height', '15')
+  //   .style('fill', '#4363d8')
+  
 
 }
