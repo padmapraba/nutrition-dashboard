@@ -5,7 +5,51 @@ var ingredients_data, descrip_data, attrFoodType, attrFoodItem, attrNutrient;
 var fact, colorScale;
 var xScale, yScale, plot, back;
 
+colorScale = {
+  'Protein': "#bf045b",
+  'Carbohydrate': "#ff7f0e",
+  'Lipids': "#9467bd",
+  "Monosaturated Fats": "#9467bd",
+  "Polysaturated Fats": "#9467bd",
+  "Saturated Fats": "#9467bd",
 
+  'Minerals': "#d62728",
+  'Zinc': "#d62728",
+  'Sodium': "#d62728",
+  "Calcium": "#d62728",
+  "Copper": "#d62728",
+  "Iron": "#d62728",
+  "Magnesium": "#d62728",
+  "Phosphorus": "#d62728",
+  "Potassium": "#d62728",
+
+  "Vitamins": "#2ca02c",
+  "Vitamin A - RAE": "#2ca02c",
+  "Vitamin B12": "#2ca02c",
+  "Vitamin B6": "#2ca02c",
+  "Vitamin C": "#2ca02c",
+  "Vitamin E": "#2ca02c",
+  "Vitamin K": "#2ca02c",
+
+  'Alpha Carotene': 'salmon',
+  'Beta Carotene': 'orange red',
+  'Cholesterol': 'teal',
+  'Fiber': 'plum',
+  'Sugar Total': '#6495ED'
+};
+
+var hovertip = d3
+    .select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .style("background", "white")
+    .style("padding", 3 + "px")
+    .style("margin", 5 + "px")
+    .style("border-radius", 5 + "px")
+    .style("border", 1 + "px solid black")
+    .style("font-size", 15 + "px");
 
 document.addEventListener("DOMContentLoaded", () => {
   // svgA = d3.select("#A");
@@ -13,163 +57,146 @@ document.addEventListener("DOMContentLoaded", () => {
   svgC = d3.select("#C");
   svgD = d3.select("#D");
   svgE = d3.select("#E");
-  // svgD1 = d3.select("#D #F");
-
-  // width = +svgA.style("width").replace("px", "");
-  // height = +svgA.style("height").replace("px", "");
-  // innerWidth = width - margin.left - margin.right;
-  // innerHeight = height - margin.top - margin.bottom;
+ 
 
   // Load files
   Promise.all([
     d3.csv("data/ingredients_edited.csv"),
-    d3.csv("data/descriptions.csv"),
+    d3.csv("data/descriptions.csv"), d3.csv('data/ingredients_mg.csv')
   ]).then(function (values) {
     console.log("loaded data");
     ingredients_data = values[0];
     descrip_data = values[1];
+    ing_mg_data = values[2];
+
     console.log(ingredients_data);
     console.log(descrip_data);
+    console.log(ing_mg_data);
 
     // data wrangling
+
 
     drawC();
   });
 });
 
 function drawA() {
+  attrFoodType = d3.select("#type").property("value");
+  attrNutrient = d3.select("#nutr").property("value");
+  attrFoodItem = d3.select("#item").property("value");
 
-  // // const margin = { top: 50, bottom: 50, left: 50, right: 50 };
-  // var widthA = svgA.node().clientWidth;
-  // var heightA = svgA.node().clientHeight;
-  // // // var width = 700, height  = 500;
-
-
-  // // //color
-  // var addColor = d3.scaleOrdinal(d3.schemeDark2);
-
-  // svgA.select("g").remove();
-
-  // // var node = svgA.append("g")
-
-  // // var svgA = d3.select("body").append("svgA").attr("width", widthA).attr("height", heightA)
-  // //   .style("background", "white");
-
-  // // // //input info for data
-  // // var info = [
-
-  // //   { type: "carbs", amount: 60 },
-  // //   { type: "proteins", amount: 20 },
-  // //   { type: "vitamin", amount: 5},
-  // //   { type: "mineral", amount: 5},
-  // //   { type: "fats", amount:  10},
-  // // ];
-
-  // var info = { carbs: 60, proteins: 20, vitamin: 5, mineral: 5, fats: 10 }
-  // console.log(info)
-  // // var data = d3.pie().sort(null).value(function (d) { return d.amount; })(info);
-  // var pie = d3.pie().value(function (d) { return d.value; })
-  // var data_ready = pie(d3.entries(info))
-  // // console.log(data);
-  // //make arc
-  // var theSegment = d3.arc()
-  //   .innerRadius(0)
-  //   .outerRadius(150)
-  //   .padAngle(.05)
-  //   .padRadius(50)
-
-  // console.log(widthA, heightA)
-  // //combine
-  // // var putSections = svgA.append("g").attr("transform", "translate(249,250)")
-  // //   .selectAll("path").data(data)
-
-  // svgA.selectAll('mysectors')
-  //   .data(data_ready)
-  //   .enter()
-  //   .append('path')
-  //   .attr("d", theSegment).attr("fill", "#66C2A5");
-
-
-  // //putSections.enter().append("path").attr("d",theSegment).attr("fill",
-  // //function(d){return addColor(d.data.amount)});
-  // // putSections.enter().append("path")
-  // // //make text appera
-  // // var text = d3.select("g").selectAll("text").data(data);
-  // // text.enter().append("text").each(function (d) {
-  // //   var center = theSegment.centroid(d);
-  // //   d3.select(this).attr("x", center[0]).attr("y", center[1]).text(d.data.amount)
-  // // })
-
-  // -----
-  // var width = svgA.node().clientWidth;
-  // var height = svgA.node().clientHeight;
-  // console.log(width,height)
-  // margin = 40
+  console.log(attrFoodItem,attrFoodType,attrNutrient);
 
   var width = 500
-    height = 350
-    margin = 40
+  height = 350
+  margin = 40
 
-  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
   var radius = Math.min(width, height) / 2 - margin
 
-  // append the svg object to the div called 'my_dataviz'
   var svgA = d3.select("#A")
-  .append("svg")
+    .append("svg")
     .attr("width", width)
     .attr("height", height)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
- 
 
-  // create 2 data_set
-  var data1 = { a: 9, b: 20, c: 30, d: 8, e: 12 }
-  var data2 = { a: 6, b: 16, c: 20, d: 14, e: 19, f: 12 }
+  var foodItem = [];
+  ing_mg_data.forEach((element) => {
+    if (element.Description == attrFoodItem) {
+      foodItem.push(element);
+    }
+  });
 
-  // set the color scale
-  var color = d3.scaleOrdinal()
-    .domain(["a", "b", "c", "d", "e", "f"])
-    .range(d3.schemeDark2);
+  foodItem.forEach(function(d) {
+    d.Protein = +d.Protein;
+    d.Carbohydrate = +d.Carbohydrate;
+    d.Lipids = +d.Lipids;
 
-  // A function that create / update the plot for a given variable:
-  function update(data) {
+    // vitamins
+    d['Vitamin A - RAE'] = +d['Vitamin A - RAE'];
+    d["Vitamin B12"] = +d["Vitamin B12"];
+    d["Vitamin B6"] = +d["Vitamin B6"];
+    d["Vitamin C"] = +d["Vitamin C"];
+    d["Vitamin E"] = +d["Vitamin E"];
+    d["Vitamin K"] = +d["Vitamin K"];
+    d.Vitamins = d['Vitamin A - RAE'] + d["Vitamin B12"] + d["Vitamin B6"] + d["Vitamin C"] + d["Vitamin E"] + d["Vitamin K"];
 
-    // Compute the position of each group on the pie:
+    // minerals
+    d.Zinc = +d.Zinc;
+    d.Sodium = +d.Sodium;
+    d.Calcium = +d.Calcium;
+    d.Copper = +d.Copper;
+    d.Iron = +d.Iron;
+    d.Magnesium = +d.Magnesium;
+    d.Phosphorus = +d.Phosphorus;
+    d.Potassium = +d.Potassium;
+
+    d.Minerals = d.Zinc + d.Sodium + d.Calcium + d.Copper + d.Iron + d.Magnesium + d.Phosphorus + d.Potassium;
+  });
+
+  console.log(foodItem)
+
+  var data1 = {Protein: foodItem[0].Protein, Carbohydrate: foodItem[0].Carbohydrate, Lipids: foodItem[0].Lipids, Vitamins: foodItem[0].Vitamins, Minerals: foodItem[0].Minerals}
+  console.log(data1)
+
+
+
     var pie = d3.pie()
       .value(function (d) { return d.value; })
-      .sort(function (a, b) { console.log(a); return d3.ascending(a.key, b.key); }) // This make sure that group order remains the same in the pie chart
-    var data_ready = pie(d3.entries(data))
+      .sort(function (x, y) { console.log(x); return d3.ascending(x.key, y.key); }) 
+    var finalData = pie(d3.entries(data1))
 
     // map to data
-    var u = svgA.selectAll("path")
-      .data(data_ready)
-
-    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-    u
+    var g = svgA.selectAll("path")
+      .data(finalData)
       .enter()
       .append('path')
-      .merge(u)
-      .transition()
-      .duration(1000)
-      .attr('d', d3.arc()
-        .innerRadius(0)
-        .outerRadius(radius)
-      )
-      .attr('fill', function (d) { return (color(d.data.key)) })
+      .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
+      .attr('fill', function (d) { return (colorScale[d.data.key]) })
       .attr("stroke", "white")
       .style("stroke-width", "2px")
       .style("opacity", 1)
+      .on("mouseover", function (d, i) {
+        d3.select(this).transition()
+               .duration('50')
+               .style('opacity', '.55');
 
-    // remove the group that is not present anymore
-    u
-      .exit()
-      .remove()
+        console.log(d.data.key)
+      })
+      .on("mousemove", function (d, i) {
+        
+      })
+      .on("mouseout", function (d, i) {
+        d3.select(this).transition()
+               .duration('50')
+               .style('opacity', '1');
+      })
+      .on('click', function(d,i) {
+        console.log(`clicked ${d.data.key}`);
 
-  }
+        drawB(d.data.key);
+      
+      })
 
-  // Initialize the plot with the first dataset
-  update(data1)
+    // g.enter()
+    //   .append('path')
+    //   // .merge(g)
+    //   .transition()
+    //   .duration(1000)
+    //   .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
+    //   .attr('fill', function (d) { return (colorScale[d.data.key]) })
+    //   .attr("stroke", "white")
+    //   .style("stroke-width", "2px")
+    //   .style("opacity", 1)
+      
+
+
+    g.exit().remove()
+
+// }
+
+  // update(data1)
 
   drawC();
   drawB();
@@ -187,11 +214,11 @@ function drawC() {
   var widthC = svgC.node().clientWidth;
   var heightC = svgC.node().clientHeight;
 
-  console.log(attrFoodType, attrNutrient);
+  // console.log(attrFoodType, attrNutrient);
 
   foodData = ingredients_data.filter((d) => d.Category == attrFoodType);
 
-  console.log(foodData);
+  // console.log(foodData);
 
   var foodlist = [];
 
@@ -201,38 +228,8 @@ function drawC() {
     }
   });
 
-  console.log(foodlist);
-  colorScale = {
-    'Protein': "#bf045b",
-    'Carbohydrate': "#bf5e04",
-    'Lipids': "#0464b3",
-    "Monosaturated Fats": "#0464b3",
-    "Polysaturated Fats": "#0464b3",
-    "Saturated Fats": "#0464b3",
+  // console.log(foodlist);
 
-    'Zinc': "#b30f04",
-    'Sodium': "#b30f04",
-    "Calcium": "#b30f04",
-    "Copper": "#b30f04",
-    "Iron": "#b30f04",
-    "Magnesium": "#b30f04",
-    "Phosphorus": "#b30f04",
-    "Potassium": "#b30f04",
-
-    "Vitamin A - RAE": "#8404b3",
-    "Vitamin B12": "#8404b3",
-    "Vitamin B6": "#8404b3",
-    "Vitamin C": "#8404b3",
-    "Vitamin E": "#8404b3",
-    "Vitamin K": "#8404b3",
-
-    'Alpha Carotene': 'salmon',
-    'Beta Carotene': 'orange red',
-    'Cholesterol': 'teal',
-    'Fiber': 'plum',
-    'Sugar Total': '#6495ED'
-
-  };
 
   let max = d3.max(foodData, (d) => +d[attrNutrient]);
   let min = d3.min(foodData, (d) => +d[attrNutrient]);
@@ -355,7 +352,7 @@ function drawC() {
     .text(attrNutrient);
 
   function fillCirc(d) {
-    console.log(attrFoodItem);
+    // console.log(attrFoodItem);
     if (d.Description == attrFoodItem) {
       return '#808080';
     } else {
@@ -367,7 +364,9 @@ function drawC() {
 
 
 
-function drawB() {
+function drawB(key) {
+  console.log("key:" + key);
+
   const margin = { top: 50, bottom: 50, left: 70, right: 50 };
   const FIELDS_TO_SHOW = {
     Fats: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
@@ -394,7 +393,7 @@ function drawB() {
     (d) => d.Category == attrFoodType && d.Description == attrFoodItem
   )[0];
 
-  svgA.selectAll("g").remove();
+  svgB.selectAll("g").remove();
   foodData = FIELDS_TO_SHOW[attrNutrient].map((field) => ({
     name: field,
     score: foodData[field],
