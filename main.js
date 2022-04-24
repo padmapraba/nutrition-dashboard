@@ -490,7 +490,8 @@ function drawB(key) {
   svgB.node();
 }
 
-function drawD() {
+function drawD() 
+{
   svgD
     .append("text")
     .attr("x", "15")
@@ -658,7 +659,7 @@ function drawD() {
     .attr("x", "30")
     .attr("y", "320")
     .text("Trans Fat 0g")
-    .attr("font-size", "15px");
+    .attr("font-size", "15px")    
 
   svgD
     .append("line")
@@ -733,20 +734,25 @@ function drawD() {
     .attr("x2", 390) //left right width
     .attr("y2", 395);
 
-  svgD
-    .append("text")
-    .attr("x", "30")
-    .attr("y", "415")
-    .text("Dietary Fiber 4g")
-    .attr("font-size", "15px");
-
-  svgD
-    .append("text")
-    .attr("x", "360")
-    .attr("y", "415")
-    .text("5%")
+    svgD.append('text')
+    .attr('x', '10')
+    .attr('y', '415')
+    .text('Total Carbohydrate')
     .attr("font-size", "17px")
-    .style("font-weight", "bold");
+    .style('font-weight', 'bold')
+
+    svgD.append('text')
+    .attr('x', '175')
+    .attr('y', '415')
+    .text('37g')
+    .attr("font-size", "17px")
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '415')
+    .text('13%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
 
   svgD
     .append("line")
@@ -761,8 +767,15 @@ function drawD() {
     .append("text")
     .attr("x", "30")
     .attr("y", "445")
-    .text("Total Sugars 12g")
+    .text("Dietary Fiber 4g")
     .attr("font-size", "15px");
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '445')
+    .text('14%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
 
   svgD
     .append("line")
@@ -773,22 +786,80 @@ function drawD() {
     .attr("x2", 390) //left right width
     .attr("y2", 455);
 
+    svgD
+    .append("text")
+    .attr("x", "30")
+    .attr("y", "475")
+    .text("Total Sugars 12g")
+    .attr("font-size", "15px");
+
+    svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 52)
+    .attr("y1", 485)
+    .attr("x2", 390) //left right width
+    .attr("y2", 485);
+
+    svgD
+    .append("text")
+    .attr("x", "52")
+    .attr("y", "505")
+    .text("Includes 10g Added Sugars")
+    .attr("font-size", "15px");
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '505')
+    .text('20%')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD
+    .append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 10)
+    .attr("y1", 515)
+    .attr("x2", 390) //left right width
+    .attr("y2", 515);
+
+    svgD.append('text')
+    .attr('x', '10')
+    .attr('y', '535')
+    .text('Proteins')
+    .attr("font-size", "17px")
+    .style('font-weight', 'bold')
+
+    svgD.append('text')
+    .attr('x', '85')
+    .attr('y', '535')
+    .text('3g')
+    .attr("font-size", "17px")
+/////////////////////////////////// ends her me
+
   svgD
     .append("line")
     .style("stroke", "black")
     .style("stroke-width", 20)
     .attr("x1", 10)
-    .attr("y1", 560)
+    .attr("y1", 557) 
     .attr("x2", 390)
-    .attr("y2", 560);
+    .attr("y2", 557);
 
   svgD
     .append("text")
     .attr("x", "10")
     .attr("y", "590")
-    .text("Vitamin D")
+    .text("Vitamin D 2mcg")
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '590')
+    .text('10%')
     .attr("font-size", "17px")
-    .style("font-weight", "normal");
 
   svgD
     .append("line")
@@ -802,9 +873,14 @@ function drawD() {
     .append("text")
     .attr("x", "10")
     .attr("y", "615")
-    .text("Calcium")
+    .text("Calcium 260mg")
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '615')
+    .text('20%')
     .attr("font-size", "17px")
-    .style("font-weight", "normal");
 
   svgD
     .append("line")
@@ -819,9 +895,14 @@ function drawD() {
     .append("text")
     .attr("x", "10")
     .attr("y", "640")
-    .text("Iron")
+    .text("Iron 8mg")
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '355')
+    .attr('y', '640')
+    .text('45%')
     .attr("font-size", "17px")
-    .style("font-weight", "normal");
 
   svgD
     .append("line")
@@ -835,9 +916,14 @@ function drawD() {
     .append("text")
     .attr("x", "10")
     .attr("y", "665")
-    .text("Potassium")
+    .text("Potassium 240mg")
+    .attr("font-size", "15px")
+
+    svgD.append('text')
+    .attr('x', '363')
+    .attr('y', '665')
+    .text('6%')
     .attr("font-size", "17px")
-    .style("font-weight", "normal");
 
   svgD
     .append("line")
@@ -869,4 +955,5 @@ function drawD() {
     .text(" calories a day is used for general nutritional advice.")
     .attr("font-size", "15px")
     .style("font-weight", "normal");
+   
 }
