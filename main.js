@@ -2,13 +2,18 @@ var svgA, svgB, svgC, svgD, svgE, svgD1;
 var width, height, innerHeight, innerWidth;
 var margin = { top: 50, right: 60, bottom: 60, left: 100 };
 var ingredients_data, descrip_data, attrFoodType, attrFoodItem, attrNutrient;
-var fact, colorScale;
+var fact, colorScale, key;
 var xScale, yScale, plot, back;
+var macro;
 
 colorScale = {
   Protein: "#bf045b",
+  Thiamin:"#bf045b",
+  Lycopene:"#bf045b",
+  Niacin:"#bf045b",
   Carbohydrate: "#ff7f0e",
   "Sugar Total": "#ff7f0e",
+  Fiber: "#ff7f0e",
 
   Lipids: "#9467bd",
   "Monosaturated Fats": "#9467bd",
@@ -36,7 +41,7 @@ colorScale = {
   "Alpha Carotene": "salmon",
   "Beta Carotene": "orange red",
   Cholesterol: "teal",
-  Fiber: "plum",
+  
 };
 
 var hovertip = d3
@@ -70,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
     descrip_data = values[1];
     ing_mg_data = values[2];
 
-    console.log(ingredients_data);
-    console.log(descrip_data);
-    console.log(ing_mg_data);
+    // console.log(ingredients_data);
+    // console.log(descrip_data);
+    // console.log(ing_mg_data);
 
     // data wrangling
 
@@ -85,13 +90,14 @@ function drawA() {
   attrNutrient = d3.select("#nutr").property("value");
   attrFoodItem = d3.select("#item").property("value");
 
-  console.log(attrFoodItem, attrFoodType, attrNutrient);
+  // console.log(attrFoodItem, attrFoodType, attrNutrient);
 
   var width = 500;
   height = 350;
   margin = 40;
 
   var radius = Math.min(width, height) / 2 - margin;
+
 
   var svgA = d3
     .select("#A")
@@ -149,7 +155,7 @@ function drawA() {
       d.Potassium;
   });
 
-  console.log(foodItem);
+  // console.log(foodItem);
 
   var data1 = {
     Protein: foodItem[0].Protein,
@@ -158,7 +164,7 @@ function drawA() {
     Vitamins: foodItem[0].Vitamins,
     Minerals: foodItem[0].Minerals,
   };
-  console.log(data1);
+  // console.log(data1);
 
   var pie = d3
     .pie()
@@ -166,14 +172,16 @@ function drawA() {
       return d.value;
     })
     .sort(function (x, y) {
-      console.log(x);
+      // console.log(x);
       return d3.ascending(x.key, y.key);
     });
   var finalData = pie(d3.entries(data1));
 
   // map to data
-  var g = svgA
-    .selectAll("path")
+
+  svgA.selectAll('*').remove();
+
+  svgA.selectAll("path")
     .data(finalData)
     .enter()
     .append("path")
@@ -185,36 +193,30 @@ function drawA() {
     .style("stroke-width", "2px")
     .style("opacity", 1)
     .on("mouseover", function (d, i) {
-      d3.select(this).transition().duration("50").style("opacity", ".55");
-
-      console.log(d.data.key);
+      d3.select(this).transition().duration("50").style("stroke-width", "6px");
+      hovertip.html(`<b>${d.data.key}</b>`);
+      hovertip.style("visibility", "visible");
+      // console.log(d.data.key);
     })
-    .on("mousemove", function (d, i) {})
+    .on("mousemove", function (d, i) {
+      hovertip
+        .style("top", d3.event.pageY - 10 + "px")
+        .style("left", d3.event.pageX + 10 + "px");
+    })
     .on("mouseout", function (d, i) {
-      d3.select(this).transition().duration("50").style("opacity", "1");
+      d3.select(this).transition().duration("50").style("stroke-width", "2px");
+      hovertip.style("visibility", "hidden");
     })
     .on("click", function (d, i) {
-      console.log(`clicked ${d.data.key}`);
-
+      // console.log(`clicked ${d.data.key}`);
+      macro = d.data.key;
       drawB(d.data.key);
     });
 
-  // g.enter()
-  //   .append('path')
-  //   // .merge(g)
-  //   .transition()
-  //   .duration(1000)
-  //   .attr('d', d3.arc().innerRadius(0).outerRadius(radius))
-  //   .attr('fill', function (d) { return (colorScale[d.data.key]) })
-  //   .attr("stroke", "white")
-  //   .style("stroke-width", "2px")
-  //   .style("opacity", 1)
 
-  g.exit().remove();
 
   drawC();
-  // drawB();
-  console.log("done with B");
+  // console.log("done with B");
   drawD();
 }
 
@@ -278,7 +280,6 @@ function drawC(key) {
     .attr("r", (d) => size(+d[attrNutrient]))
     .attr("cx", widthC / 2)
     .attr("cy", heightC / 2)
-    // .style("fill", colorScale[attrNutrient])
     .style("fill", (d) => fillCirc(d))
     .style("fill-opacity", 0.9)
     .style("stroke-width", 1)
@@ -293,6 +294,13 @@ function drawC(key) {
     })
     .on("mouseout", function (d, i) {
       hovertip.style("visibility", "hidden");
+    })
+    .on("click", function (d, i) {
+      // console.log(`clicked ${d.Description}`);
+      d3.select("#item").property("value", d.Description);
+      drawA();
+      drawB(macro);
+
     })
     .call(
       d3
@@ -332,7 +340,7 @@ function drawC(key) {
       });
   });
 
-  // What happens when a circle is dragged?
+
   function dragstarted(d) {
     hovertip.style("visibility", "hidden");
     if (!d3.event.active) simulation.alphaTarget(0.03).restart();
@@ -351,21 +359,21 @@ function drawC(key) {
     d.fy = null;
   }
 
-  svgE.selectAll("g").remove();
+  // svgE.selectAll("g").remove();
 
-  var widthE = svgE.node().clientWidth;
+  // var widthE = svgE.node().clientWidth;
 
-  // add text to svg E
-  var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
+  // // add text to svg E
+  // var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
 
-  glyph
-    .append("text")
-    .style("text-anchor", "middle")
-    .style("alignment-baseline", "middle")
-    .attr("font-size", 30 + "px")
-    .attr("fill", "black")
-    .style("font-weight", "bold")
-    .text(attrNutrient);
+  // glyph
+  //   .append("text")
+  //   .style("text-anchor", "middle")
+  //   .style("alignment-baseline", "middle")
+  //   .attr("font-size", 30 + "px")
+  //   .attr("fill", "black")
+  //   .style("font-weight", "bold")
+  //   .text(attrNutrient);
 
   function fillCirc(d) {
     // console.log(attrFoodItem);
@@ -384,7 +392,7 @@ function drawB(key) {
 
   const FIELDS_TO_SHOW = {
     Lipids: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
-    Carbohydrate: ["Sugar Total"],
+    Carbohydrate: ["Sugar Total", "Fiber"],
     Protein: ["Lycopene", "Niacin", "Thiamin"],
     Vitamins: [
       "Vitamin A - RAE",
@@ -413,10 +421,10 @@ function drawB(key) {
   var width = svgB.node().clientWidth;
   var height = svgB.node().clientHeight;
 
-  var foodData = ingredients_data.filter(
+  var foodData = ing_mg_data.filter(
     (d) => d.Category == attrFoodType && d.Description == attrFoodItem
   )[0];
-  console.log("food data", foodData);
+  // console.log("food data", foodData);
 
   svgB.selectAll("g").remove();
   foodData = FIELDS_TO_SHOW[key].map((field) => ({
@@ -451,8 +459,8 @@ function drawB(key) {
     .attr("height", (d) => y(0) - y(d.score))
     .attr("width", x.bandwidth())
     .on("click", function (d, i) {
-      console.log(`clicked ${d.name}`);
-
+      // console.log(`clicked ${d.name}`);
+      d3.select("#nutr").property("value", d.name);
       drawC(d.name);
     });
 
@@ -466,9 +474,6 @@ function drawB(key) {
       g.attr("transform", `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
         .selectAll("text")
-        // .style("text-anchor", "end")
-        // .attr("dx", "-10px")
-        // .attr("dy", "0px")
         .attr("transform", "rotate(-10)")
         .attr("font-size", "10px");
     }
@@ -477,10 +482,6 @@ function drawB(key) {
       g.attr("transform", `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickFormat((i) => foodData[i].name))
         .selectAll("text")
-        // .style("text-anchor", "end")
-        // .attr("dx", "-10px")
-        // .attr("dy", "0px")
-        // .attr("transform", "rotate(-10)" )
         .attr("font-size", "10px");
     }
   }
@@ -490,8 +491,23 @@ function drawB(key) {
   svgB.node();
 }
 
-function drawD() 
-{
+function drawD() {
+  attrFoodType = d3.select("#type").property("value");
+  attrNutrient = d3.select("#nutr").property("value");
+  attrFoodItem = d3.select("#item").property("value");
+
+  svgD.selectAll('text').remove();
+  console.log(attrFoodItem, attrFoodType, attrNutrient);
+
+  var foodItem = [];
+  ing_mg_data.forEach((element) => {
+    if (element.Description == attrFoodItem) {
+      foodItem.push(element);
+    }
+  });
+
+  console.log("D:", foodItem)
+
   svgD
     .append("text")
     .attr("x", "15")
@@ -610,7 +626,7 @@ function drawD()
     .append("text")
     .attr("x", "90")
     .attr("y", "260")
-    .text("8g")
+    .text(`${foodItem[0].Lipids}mg`)
     .attr("font-size", "17px");
 
   svgD
@@ -634,7 +650,7 @@ function drawD()
     .append("text")
     .attr("x", "30")
     .attr("y", "290")
-    .text("Saurated Fat 1g")
+    .text(`Saturated Fat ${foodItem[0]['Saturated Fats']}mg`)
     .attr("font-size", "15px");
 
   svgD
@@ -659,7 +675,7 @@ function drawD()
     .attr("x", "30")
     .attr("y", "320")
     .text("Trans Fat 0g")
-    .attr("font-size", "15px")    
+    .attr("font-size", "15px");
 
   svgD
     .append("line")
@@ -682,7 +698,7 @@ function drawD()
     .append("text")
     .attr("x", "110")
     .attr("y", "353")
-    .text("0mg")
+    .text(`${foodItem[0].Cholesterol}mg`)
     .attr("font-size", "17px");
 
   svgD
@@ -714,7 +730,7 @@ function drawD()
     .append("text")
     .attr("x", "80")
     .attr("y", "385")
-    .text("160mg")
+    .text(`${foodItem[0].Sodium}mg`)
     .attr("font-size", "17px");
 
   svgD
@@ -724,6 +740,9 @@ function drawD()
     .text("7%")
     .attr("font-size", "17px")
     .style("font-weight", "bold");
+
+
+  
 
   svgD
     .append("line")
@@ -744,7 +763,7 @@ function drawD()
     svgD.append('text')
     .attr('x', '175')
     .attr('y', '415')
-    .text('37g')
+    .text(`${foodItem[0].Carbohydrate}mg`)
     .attr("font-size", "17px")
 
     svgD.append('text')
@@ -753,6 +772,21 @@ function drawD()
     .text('13%')
     .attr("font-size", "17px")
     .style('font-weight', 'bold')
+  
+
+    svgD.append('text')
+    .attr('x', '30')
+    .attr('y', '445')
+    .text(`Dietary Fiber ${foodItem[0].Fiber}mg`)
+    .attr("font-size", "15px")
+
+  svgD
+    .append("text")
+    .attr("x", "360")
+    .attr("y", "445")
+    .text("5%")
+    .attr("font-size", "17px")
+    .style("font-weight", "bold");
 
   svgD
     .append("line")
@@ -766,41 +800,19 @@ function drawD()
   svgD
     .append("text")
     .attr("x", "30")
-    .attr("y", "445")
-    .text("Dietary Fiber 4g")
+    .attr("y", "475")
+    .text(`Total Sugars ${foodItem[0]['Sugar Total']}mg`)
     .attr("font-size", "15px");
 
-    svgD.append('text')
-    .attr('x', '355')
-    .attr('y', '445')
-    .text('14%')
-    .attr("font-size", "17px")
-    .style('font-weight', 'bold')
-
-  svgD
-    .append("line")
+    svgD.append('line')
     .style("stroke", "black")
     .style("stroke-width", 1)
     .attr("x1", 10)
-    .attr("y1", 455)
-    .attr("x2", 390) //left right width
-    .attr("y2", 455);
-
-    svgD
-    .append("text")
-    .attr("x", "30")
-    .attr("y", "475")
-    .text("Total Sugars 12g")
-    .attr("font-size", "15px");
-
-    svgD
-    .append("line")
-    .style("stroke", "black")
-    .style("stroke-width", 1)
-    .attr("x1", 52)
     .attr("y1", 485)
-    .attr("x2", 390) //left right width
-    .attr("y2", 485);
+    .attr("x2", 390)//left right width 
+    .attr("y2", 485)
+
+    
 
     svgD
     .append("text")
@@ -835,7 +847,7 @@ function drawD()
     svgD.append('text')
     .attr('x', '85')
     .attr('y', '535')
-    .text('3g')
+    .text(`${foodItem[0].Protein}mg`)
     .attr("font-size", "17px")
 /////////////////////////////////// ends her me
 
@@ -852,7 +864,7 @@ function drawD()
     .append("text")
     .attr("x", "10")
     .attr("y", "590")
-    .text("Vitamin D 2mcg")
+    .text(`Vitamin B6 ${foodItem[0]['Vitamin B6']}mg`)
     .attr("font-size", "15px")
 
     svgD.append('text')
@@ -873,7 +885,7 @@ function drawD()
     .append("text")
     .attr("x", "10")
     .attr("y", "615")
-    .text("Calcium 260mg")
+    .text(`Calcium ${foodItem[0].Calcium}mg`)
     .attr("font-size", "15px")
 
     svgD.append('text')
@@ -895,7 +907,7 @@ function drawD()
     .append("text")
     .attr("x", "10")
     .attr("y", "640")
-    .text("Iron 8mg")
+    .text(`Iron ${foodItem[0].Iron}mg`)
     .attr("font-size", "15px")
 
     svgD.append('text')
@@ -916,7 +928,7 @@ function drawD()
     .append("text")
     .attr("x", "10")
     .attr("y", "665")
-    .text("Potassium 240mg")
+    .text(`Potassium ${foodItem[0].Potassium}mg`)
     .attr("font-size", "15px")
 
     svgD.append('text')
@@ -955,5 +967,4 @@ function drawD()
     .text(" calories a day is used for general nutritional advice.")
     .attr("font-size", "15px")
     .style("font-weight", "normal");
-   
 }
