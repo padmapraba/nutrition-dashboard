@@ -34,7 +34,7 @@
     </select>
 
     &nbsp;Nutrient:&nbsp;
-    <select id='nutr' name="nutriName" onchange='onChangeNutrient();'>
+    <select id='nutr' name="nutriName" onchange='drawC();'>
       <option value="">-- Choose --</option>
       <option value='Protein'>Protein</option>
       <option value="Niacin">Niacin</option>
@@ -128,7 +128,8 @@
         </div>
         <div class="row">
           <svg id='C'> </svg>
-          <div id = 'Desc'
+          <svg id="E"></svg>
+          <!-- <div id = 'Desc'
             style="background: rgb(255, 255, 255); 
             font-size: 20px; 
             padding: 10px; 
@@ -144,6 +145,8 @@
                 ]).then(function (values) {
                   descrip_data = values[1];    
                 })
+
+                console.log("dd:", descrip_data)
                 var result = descrip_data.filter(element => element.Nutrient == str)
                 return result;
 
@@ -153,7 +156,7 @@
                
                   var ex = document.getElementsByName('nutriName')[0];
                   var str= ex.options[ex.selectedIndex].value;
-                  //console.log("yay result", getData(str));
+                  console.log("yay result", getData(str));
                   document.getElementById('Desc').innerHTML="<h2>" + str + "</h2>" ;
                   //document.getElementById('Desc').innerHTML="<h2>" + str + "</h2>" + "<h3>" + nutriInfo[0] + "</h3>";
                   //console.log("HI", descrip_data[0].Value);
@@ -168,7 +171,7 @@
                 drawC();
                 displayInfo();
               }
-            </script>
+            </script> -->
             
           </div>
         </div>

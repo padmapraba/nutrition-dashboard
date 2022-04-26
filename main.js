@@ -359,21 +359,39 @@ function drawC(key) {
     d.fy = null;
   }
 
-  // svgE.selectAll("g").remove();
+  svgE.selectAll("g").remove();
 
-  // var widthE = svgE.node().clientWidth;
+  var widthE = svgE.node().clientWidth;
 
-  // // add text to svg E
-  // var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
+  // add text to svg E
+  var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
 
-  // glyph
-  //   .append("text")
-  //   .style("text-anchor", "middle")
-  //   .style("alignment-baseline", "middle")
-  //   .attr("font-size", 30 + "px")
-  //   .attr("fill", "black")
-  //   .style("font-weight", "bold")
-  //   .text(attrNutrient);
+  var info;
+  descrip_data.forEach((element) => {
+    if (element.Nutrient == attrNutrient) {
+      info = element.Value;
+      console.log(info)
+    }
+  });
+
+  glyph
+    .append("text")
+    .style("text-anchor", "middle")
+    .style("alignment-baseline", "middle")
+    .attr("font-size", 30 + "px")
+    .attr("fill", "black")
+    .style("font-weight", "bold")
+    .text(attrNutrient);
+
+  var des_glyph = svgE.append('g').attr("transform", `translate(${widthE / 2},75)`);
+
+  console.log("for e",descrip_data)
+
+  // des_glyph.append('text')
+  // .style("text-anchor", "middle")
+  // .style("alignment-baseline", "middle")
+  // .attr('font-size', '20px')
+  // .text(info)
 
   function fillCirc(d) {
     // console.log(attrFoodItem);
