@@ -34,7 +34,7 @@
     </select>
 
     &nbsp;Nutrient:&nbsp;
-    <select id='nutr' onchange='drawC();'>
+    <select id='nutr' name="nutriName" onchange='onChangeNutrient();'>
       <option value="">-- Choose --</option>
       <option value='Protein'>Protein</option>
       <option value="Niacin">Niacin</option>
@@ -64,7 +64,6 @@
       <option value="Vitamin K">Vitamin K</option>
 
       <option value='Alpha Carotene'>Alpha Carotene</option>
-      <option value='Beta Carotene'>Beta Carotene</option>
       <option value='Cholesterol'>Cholesterol</option>
       <option value='Fiber'>Fiber</option>
       <option value='Sugar Total'>Sugar</option>
@@ -129,7 +128,8 @@
         </div>
         <div class="row">
           <svg id='C'> </svg>
-          <div style="background: rgb(255, 255, 255); 
+          <div id = 'Desc'
+            style="background: rgb(255, 255, 255); 
             font-size: 20px; 
             padding: 10px; 
             border: 1px solid rgb(0, 0, 0); 
@@ -137,6 +137,38 @@
             width: 350px;
             border-radius:10px;
             height: auto;">
+            <script>
+               function getData(str){
+                Promise.all([
+                  d3.csv("data/descriptions.csv")
+                ]).then(function (values) {
+                  descrip_data = values[1];    
+                })
+                var result = descrip_data.filter(element => element.Nutrient == str)
+                return result;
+
+              }
+
+              function displayInfo(){
+               
+                  var ex = document.getElementsByName('nutriName')[0];
+                  var str= ex.options[ex.selectedIndex].value;
+                  //console.log("yay result", getData(str));
+                  document.getElementById('Desc').innerHTML="<h2>" + str + "</h2>" ;
+                  //document.getElementById('Desc').innerHTML="<h2>" + str + "</h2>" + "<h3>" + nutriInfo[0] + "</h3>";
+                  //console.log("HI", descrip_data[0].Value);
+                
+                
+                //console.log("hi data", descrip_data[0][str].Value);
+                //document.getElementById('Desc').innerHTML="<h3>" + descrip_data[0].Value + "</h3>";
+              }
+
+             
+                function onChangeNutrient(){
+                drawC();
+                displayInfo();
+              }
+            </script>
             
           </div>
         </div>
