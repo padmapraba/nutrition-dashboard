@@ -12,7 +12,7 @@ For this project we have implemented a nutrition dashboard with the help of data
 - interface
 - implemented viz
   - UI Widgets
-  ![ui](images/dropdown.png)
+  ![ui](images/dropdowns.png)
   ![ui2](images/dropdown2.png)
   - View A
   ![View A](images/a.png)
