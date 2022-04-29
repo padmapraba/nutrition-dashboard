@@ -11,10 +11,18 @@ For this project we have implemented a nutrition dashboard with the help of data
 ## Idioms
 - interface
 - implemented viz
+  - UI Widgets
+  ![ui](images/dropdown.png)
+  ![ui2](images/dropdown2.png)
   - View A
+  ![View A](images/a.png)
   - View B
+  ![View B](images/b.png)
   - View C
+  ![View C](images/c.png)
   - View D
+  ![View D](images/d.png)
+  
 - interactions?
 - screenshots
 ## Reflection
