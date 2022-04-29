@@ -194,7 +194,7 @@ function drawA() {
     .style("opacity", 1)
     .on("mouseover", function (d, i) {
       d3.select(this).transition().duration("50").style("stroke-width", "6px");
-      hovertip.html(`<b>${d.data.key}</b>`);
+      hovertip.html(`<b>${d.data.key}</b><br>${d.data.value} mg`);
       hovertip.style("visibility", "visible");
       // console.log(d.data.key);
     })
@@ -213,7 +213,11 @@ function drawA() {
       drawB(d.data.key);
     });
 
-
+    svgA.append("text")
+    .attr('x', -100)
+    .attr('y',-145)
+    .style('fill', '#808080')
+    .text('Distribution of Macro-Nutrients')
 
   drawC();
   // console.log("done with B");
@@ -359,40 +363,6 @@ function drawC(key) {
     d.fy = null;
   }
 
-  svgE.selectAll("g").remove();
-
-  var widthE = svgE.node().clientWidth;
-
-  // add text to svg E
-  var glyph = svgE.append("g").attr("transform", `translate(${widthE / 2},40)`);
-
-  var info;
-  descrip_data.forEach((element) => {
-    if (element.Nutrient == attrNutrient) {
-      info = element.Value;
-      console.log(info)
-    }
-  });
-
-  glyph
-    .append("text")
-    .style("text-anchor", "middle")
-    .style("alignment-baseline", "middle")
-    .attr("font-size", 30 + "px")
-    .attr("fill", "black")
-    .style("font-weight", "bold")
-    .text(attrNutrient);
-
-  var des_glyph = svgE.append('g').attr("transform", `translate(${widthE / 2},75)`);
-
-  console.log("for e",descrip_data)
-
-  // des_glyph.append('text')
-  // .style("text-anchor", "middle")
-  // .style("alignment-baseline", "middle")
-  // .attr('font-size', '20px')
-  // .text(info)
-
   function fillCirc(d) {
     // console.log(attrFoodItem);
     if (d.Description == attrFoodItem) {
@@ -406,7 +376,7 @@ function drawC(key) {
 function drawB(key) {
   console.log("key:" + key);
 
-  const margin = { top: 50, bottom: 50, left: 70, right: 50 };
+  const margin = { top: 50, bottom: 50, left: 90, right: 40 };
 
   const FIELDS_TO_SHOW = {
     Lipids: ["Monosaturated Fats", "Polysaturated Fats", "Saturated Fats"],
@@ -480,6 +450,7 @@ function drawB(key) {
       // console.log(`clicked ${d.name}`);
       d3.select("#nutr").property("value", d.name);
       drawC(d.name);
+      displayInfo();
     });
 
   function yAxis(g) {
@@ -503,6 +474,20 @@ function drawB(key) {
         .attr("font-size", "10px");
     }
   }
+
+  svgB.append("text")
+    .attr('x', -235)
+    .attr('y',30)
+    .style('fill', '#808080')
+    .attr('transform','rotate(-90)')
+    .text('Amount (mg)')
+
+  svgB.append("text")
+    .attr('x', 150)
+    .attr('y',30)
+    .style('fill', '#808080')
+    .text('Distribution of Sub-Nutrients')
+  
 
   svgB.append("g").call(xAxis);
   svgB.append("g").call(yAxis);
