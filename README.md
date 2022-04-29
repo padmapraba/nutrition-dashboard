@@ -15,14 +15,14 @@ For this project we have implemented a nutrition dashboard with the help of data
   ![ui](images/dropdowns.png)
   ![ui2](images/dropdown2.png)
   - View A
-  <img src="images/a.png" alt="viewA" width="450"/>
+  <img src="images/a.png" alt="viewA" width="450" class="center"/>
 <!--   ![View A](images/a.png) -->
   - View B
-  <img src="images/b.png" alt="viewB" width="450"/>
+  <img src="images/b.png" alt="viewB" width="450" class="center"/>
   - View C
-  <img src="images/c.png" alt="viewC" width="600"/>
+  <img src="images/c.png" alt="viewC" width="600" class="center"/>
   - View D
-  <img src="images/d.png" alt="viewd" height="600"/>
+  <img src="images/d.png" alt="viewd" height="600" class="center"/>
   
 - interactions?
 - screenshots
