@@ -7,6 +7,7 @@ summary ...
 ## Data
 - Source: https://corgis-edu.github.io/corgis/csv/ingredients/
 - Preprocessing: Since some of the attributes in the data were in different units we decided to convert all of them to milligrams using python. We also only chose a subset of the data to use in our dashboard for the ease of implementing it.
+## Tasks
 ## Idioms
 - interface
 - implemented viz
