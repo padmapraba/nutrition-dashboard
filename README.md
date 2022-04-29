@@ -15,7 +15,8 @@ For this project we have implemented a nutrition dashboard with the help of data
   ![ui](images/dropdowns.png)
   ![ui2](images/dropdown2.png)
   - View A
-  ![View A](images/a.png)
+  <img src="images/a.png" alt="viewA" width="200"/>
+<!--   ![View A](images/a.png) -->
   - View B
   ![View B](images/b.png)
   - View C
