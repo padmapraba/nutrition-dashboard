@@ -6,6 +6,7 @@ var fact, colorScale, key;
 var xScale, yScale, plot, back;
 var macro;
 
+// color scale
 colorScale = {
   Protein: "#bf045b",
   Thiamin:"#bf045b",
@@ -43,7 +44,7 @@ colorScale = {
   Cholesterol: "teal",
   
 };
-
+// hover tooltip
 var hovertip = d3
   .select("body")
   .append("div")
@@ -58,11 +59,9 @@ var hovertip = d3
   .style("font-size", 15 + "px");
 
 document.addEventListener("DOMContentLoaded", () => {
-  // svgA = d3.select("#A");
   svgB = d3.select("#B");
   svgC = d3.select("#C");
   svgD = d3.select("#D");
-  svgE = d3.select("#E");
 
   // Load files
   Promise.all([
@@ -75,29 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     descrip_data = values[1];
     ing_mg_data = values[2];
 
-    // console.log(ingredients_data);
-    // console.log(descrip_data);
-    // console.log(ing_mg_data);
-
-    // data wrangling
-
     drawC();
   });
 });
 
+// View A: Pie chart
 function drawA() {
   attrFoodType = d3.select("#type").property("value");
   attrNutrient = d3.select("#nutr").property("value");
   attrFoodItem = d3.select("#item").property("value");
-
-  // console.log(attrFoodItem, attrFoodType, attrNutrient);
 
   var width = 500;
   height = 350;
   margin = 40;
 
   var radius = Math.min(width, height) / 2 - margin;
-
 
   var svgA = d3
     .select("#A")
@@ -107,6 +98,7 @@ function drawA() {
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+  // get data based on dropdown values
   var foodItem = [];
   ing_mg_data.forEach((element) => {
     if (element.Description == attrFoodItem) {
@@ -155,8 +147,6 @@ function drawA() {
       d.Potassium;
   });
 
-  // console.log(foodItem);
-
   var data1 = {
     Protein: foodItem[0].Protein,
     Carbohydrate: foodItem[0].Carbohydrate,
@@ -164,8 +154,8 @@ function drawA() {
     Vitamins: foodItem[0].Vitamins,
     Minerals: foodItem[0].Minerals,
   };
-  // console.log(data1);
 
+  // get sectors
   var pie = d3
     .pie()
     .value(function (d) {
@@ -175,9 +165,10 @@ function drawA() {
       // console.log(x);
       return d3.ascending(x.key, y.key);
     });
+
+  // map sectors to data
   var finalData = pie(d3.entries(data1));
 
-  // map to data
 
   svgA.selectAll('*').remove();
 
@@ -196,7 +187,6 @@ function drawA() {
       d3.select(this).transition().duration("50").style("stroke-width", "6px");
       hovertip.html(`<b>${d.data.key}</b><br>${d.data.value} mg`);
       hovertip.style("visibility", "visible");
-      // console.log(d.data.key);
     })
     .on("mousemove", function (d, i) {
       hovertip
@@ -208,7 +198,6 @@ function drawA() {
       hovertip.style("visibility", "hidden");
     })
     .on("click", function (d, i) {
-      // console.log(`clicked ${d.data.key}`);
       macro = d.data.key;
       drawB(d.data.key);
     });
@@ -220,10 +209,10 @@ function drawA() {
     .text('Distribution of Macro-Nutrients')
 
   drawC();
-  // console.log("done with B");
   drawD();
 }
 
+// View C: Circular Packing chart
 function drawC(key) {
   attrFoodType = d3.select("#type").property("value");
   if (key) {
@@ -236,12 +225,7 @@ function drawC(key) {
   var widthC = svgC.node().clientWidth;
   var heightC = svgC.node().clientHeight;
 
-  // console.log(attrFoodType, attrNutrient);
-
   foodData = ingredients_data.filter((d) => d.Category == attrFoodType);
-
-  // console.log(foodData);
-
   var foodlist = [];
 
   ingredients_data.forEach((element) => {
@@ -250,27 +234,22 @@ function drawC(key) {
     }
   });
 
-  // console.log(foodlist);
-
   let max = d3.max(foodData, (d) => +d[attrNutrient]);
   let min = d3.min(foodData, (d) => +d[attrNutrient]);
-
-  // console.log(min, max);
-
   var size = d3.scaleLinear().domain([min, max]).range([7, 50]);
 
-  var hovertip = d3
-    .select("body")
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
-    .style("background", "white")
-    .style("padding", 3 + "px")
-    .style("margin", 5 + "px")
-    .style("border-radius", 5 + "px")
-    .style("border", 1 + "px solid black")
-    .style("font-size", 15 + "px");
+  // var hovertip = d3
+  //   .select("body")
+  //   .append("div")
+  //   .style("position", "absolute")
+  //   .style("z-index", "10")
+  //   .style("visibility", "hidden")
+  //   .style("background", "white")
+  //   .style("padding", 3 + "px")
+  //   .style("margin", 5 + "px")
+  //   .style("border-radius", 5 + "px")
+  //   .style("border", 1 + "px solid black")
+  //   .style("font-size", 15 + "px");
 
   svgC.select("g").remove();
 
@@ -300,7 +279,6 @@ function drawC(key) {
       hovertip.style("visibility", "hidden");
     })
     .on("click", function (d, i) {
-      // console.log(`clicked ${d.Description}`);
       d3.select("#item").property("value", d.Description);
       drawA();
       drawB(macro);
@@ -314,7 +292,7 @@ function drawC(key) {
         .on("end", dragended)
     );
 
-  var simulation = d3
+  var sim = d3
     .forceSimulation()
     .force(
       "center",
@@ -334,7 +312,7 @@ function drawC(key) {
         })
         .iterations(1)
     );
-  simulation.nodes(foodData).on("tick", function (d) {
+  sim.nodes(foodData).on("tick", function (d) {
     node
       .attr("cx", function (d) {
         return d.x;
@@ -347,7 +325,7 @@ function drawC(key) {
 
   function dragstarted(d) {
     hovertip.style("visibility", "hidden");
-    if (!d3.event.active) simulation.alphaTarget(0.03).restart();
+    if (!d3.event.active) sim.alphaTarget(0.03).restart();
     d.fx = d.x;
     d.fy = d.y;
   }
@@ -358,7 +336,7 @@ function drawC(key) {
   }
   function dragended(d) {
     hovertip.style("visibility", "hidden");
-    if (!d3.event.active) simulation.alphaTarget(0.03);
+    if (!d3.event.active) sim.alphaTarget(0.03);
     d.fx = null;
     d.fy = null;
   }
@@ -373,6 +351,7 @@ function drawC(key) {
   }
 }
 
+// View B: Bar Chart
 function drawB(key) {
   console.log("key:" + key);
 
@@ -412,7 +391,6 @@ function drawB(key) {
   var foodData = ing_mg_data.filter(
     (d) => d.Category == attrFoodType && d.Description == attrFoodItem
   )[0];
-  // console.log("food data", foodData);
 
   svgB.selectAll("g").remove();
   foodData = FIELDS_TO_SHOW[key].map((field) => ({
@@ -447,7 +425,6 @@ function drawB(key) {
     .attr("height", (d) => y(0) - y(d.score))
     .attr("width", x.bandwidth())
     .on("click", function (d, i) {
-      // console.log(`clicked ${d.name}`);
       d3.select("#nutr").property("value", d.name);
       drawC(d.name);
       displayInfo();
@@ -535,7 +512,6 @@ function drawD() {
     .attr("y", "88")
     .text("8 serving per container")
     .attr("font-size", "15px");
-  // .style('font-weight', 'bold')
 
   svgD
     .append("text")

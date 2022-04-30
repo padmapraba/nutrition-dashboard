@@ -119,9 +119,6 @@
         <svg id='D'>
         </svg>
       </div>
-      <!-- <div class="column">
-
-      </div> -->
       <div class="column">
         <div class="row">
           <svg id='A'> </svg>
@@ -129,7 +126,6 @@
         </div>
         <div class="row">
           <svg id='C'> </svg>
-          <!-- <svg id="E"></svg> -->
           <div id = 'Desc'
             style="background: rgb(255, 255, 255); 
             font-size: 20px; 
@@ -174,17 +170,13 @@
                     Fiber: "Dietary fiber or roughage is the indigestible portion of food derived from plants. It has two main components: soluble fiber and insoluble fiber.",
                     "Sugar Total": "Sugar is the generalized name for sweet, short-chain, soluble carbohydrates, many of which are used in food. They are composed of carbon, hydrogen, and oxygen. There are various types of sugar derived from different sources. Simple sugars are called monosaccharides and include glucose (also known as dextrose), fructose, and galactose."
 
-
-
                   }
 
                   var info = data[str]
-
                   console.log(str);
                   document.getElementById('Desc').innerHTML="<h2>" + str + "</h2>" + "<p>" + info + "</p>";
                  
-              }
-
+                }
              
               function onChangeNutrient(){
                 drawC();
