@@ -22,9 +22,9 @@ The interface consists of 4 main visualizations that provide different nutrition
   The fourth visualization in our dashboard mimics the nutrition label that can be found on most food packages. This visualization is also our “innovative view”.  This is an extension of an existing technique and the aim of this visualization is to give the users a brief rundown of the most important nutrients in each food item. The plan is to make this visualization using just rectangles and text. 
 
   <img src="images/dropdowns.png" alt="dd1" width="600"/>
-  <img src="images/a.png" alt="viewA" width="450"/> <img src="images/b.png" alt="viewB" width="450"/>
+  <img src="images/a.png" alt="viewA" width="350"/> <img src="images/b.png" alt="viewB" width="350"/>
   <img src="images/c.png" alt="viewC" width="600"/>
-  <img src="images/d.png" alt="viewd" height="600"/>
+  <img src="images/d.png" alt="viewd" height="400"/>
   
 ## Reflection
 
