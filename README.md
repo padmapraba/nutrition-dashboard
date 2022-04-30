@@ -9,6 +9,12 @@ The data that was used for this nutrition dashboard is the Ingredients dataset f
 - Source: https://corgis-edu.github.io/corgis/csv/ingredients/
 - Preprocessing: Since some of the attributes in the data were in different units we decided to convert all of them to milligrams using python. We also only chose a subset of the data to use in our dashboard for the ease of implementing it.
 ## Tasks
+The main task of this dashboard is for the user to find the user to find the nutritional information of a specific food item. The dashboard will show this visualization in an organized way and the users will consume this information. The users can utilize this information for their dietary needs and customize their food plan. The visualization also has a nutritional label and will show the exact amount of nutrients. The users don’t have to do research for this data. This nutritional dashboard is extremely beneficial for the people with specific dietary needs and everything they need will be displayed.
+
+Another goal of the nutritional dashboard is for the users to be able to compare the items and pick the healthiest option for them. Not only should the user be able to know the nutrients in the specific, but they should be able to compare it with other items. When the user selects the items in the drop downs, the dashboard is tasked with comparing that item with other items of the same category. Through this, the user is able to compare their selected item to the other items and decide if it fits their dietary needs.
+
+While some online nutritional sources show the most popular items such as calories, carbohydrates, sodium, and the other items found on the back of most packages, others are filled with so much information which confuses the user. This dashboard was tasked with showcasing a more detailed visualization of all the nutrients in the micronutrient. The goal do this visualization was to give a much deeper understanding of each nutrient found in a food item. 
+
 ## Idioms
 The interface consists of 4 main visualizations that provide different nutritional insights. The charts used are:
   1. Pie chart
