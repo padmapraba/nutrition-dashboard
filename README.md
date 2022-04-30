@@ -21,14 +21,14 @@ The interface consists of 4 main visualizations that provide different nutrition
 	The third visualization in our dashboard is a circular packing chart that shows the specific nutrient information (chosen from dropdown 3). Usually, one of the biggest questions on a user's mind while looking at the nutrition of a specific food item would be if there is a healthier alternative. This visualization attempts to answer this question. Based on the food category selected in dropdown 1, this visualization compares the value selected in dropdown 3 among the different items in the food category. The food selected in the second dropdown will be highlighted in this chart for ease of comparing it to others. When the user hovers over a circle the circle is highlighted by increasing its border and the numerical data of the value selected in the 3rd dropdown is displayed in the circle.
   The fourth visualization in our dashboard mimics the nutrition label that can be found on most food packages. This visualization is also our “innovative view”.  This is an extension of an existing technique and the aim of this visualization is to give the users a brief rundown of the most important nutrients in each food item. The plan is to make this visualization using just rectangles and text. 
 
-  <img src="images/dropdowns.png" alt="dd1" width="600"/>
+  <img align="center" src="images/dropdowns.png" alt="dd1" width="600"/>
 <p align="center">
   	<img src="images/a.png" alt="viewA" width="400"/> 
 	<img src="images/b.png" alt="viewB" width="400"/>
 </p>
 
-  <img src="images/c.png" alt="viewC" width="600" align="center"/>
-  <img src="images/d.png" alt="viewd" height="400" align="center"/>
+  <img align="center" src="images/c.png" alt="viewC" width="600" />
+  <img align="center" src="images/d.png" alt="viewd" height="400"/>
   
 ## Reflection
 
