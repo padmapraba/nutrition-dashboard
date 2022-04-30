@@ -27,9 +27,16 @@ The interface consists of 4 main visualizations that provide different nutrition
   
 ## Reflection
 
+Initially, our project had a proposal that displayed four svg elements with their respective charts. When working on the project, we had some issue displaying the pie chart inside the respective svg element and we were not then able to correspond the pie chart with the stored data. The nutrition label was not able to display either in the WIP as there was an issue the team ran into. Coming to the final product, all visualizations were displayed in their respective svgs and all were interconnected. The team was able to integrate the data to be read by each visualization performing their respective functionalities. In addition, the team added a new svg displaying additional information.
+	Our goals stayed persistent throughout the project as we had initially stated a clear idea. The proposal was realistic because it allowed users to clearly navigate throughout the dashboard and understand the purpose of each element. In addition, the schedule was concise and retained clear goals and tasks to be completed each week. In order to avoid miscommunication, the team stated the tasks to be completed by each member. 
+	There were multiple challenges that occurred throughout the project. For instance, when trying to add a description inside an svg, we were unable to wrap the text. With some research and guidance, we were able to resolve this issue. There were not features that we wanted to implement but were not able to; our team was able to present all necessary information we had proposed. We had one workaround we did when creating the info text. To display the information in an organized manner, we created a dictionary with all the information and it was able to be wrapped in the svg. 
+	Something we would do differently in the future, is add a line chart within the nutrition label to indicate comparisons between food items. Furthermore, we could also display related videos based on the type of nutrient the user selects to gather more information.
+
 ## Team Workload
-- Padma:
-- Manali:
-- Anjali:
-- Pallavi:
+The team decided to divide the project into 4 parts. As we proposed four forms of visualization, each member took the responsibility of taking one visualization each. The first visualization was a pie chart that was completed by Anjali, the second was a bar chart completed by Manali, the third was a circular packing chart completed by Padma and the fourth was a nutrition label completed by Pallavi. All visualizations read data from the csv files and the dropdowns are dependent on each other.
+In the pie chart, Anjali worked on taking data from the second dropdown to display the portions of carbohydrates, lipids, protein, minerals and vitamins that consist within the food type chosen from drop down 1 and the food item chosen from drop down 2. She also worked on displaying a detailed description when the user hover over each portion of the pie chart. 
+The bar chart is connected to the pie chart, hence Manali worked on taking the user click performed on the pie chart and displaying a bar chart with the specific types of macronutrients within that portion of the pie chart.
+The circular packing chart is connected to the bar chart and the third drop down, hence Padma worked on displaying the food items in circular forms for the user to compare and visualize items consisting of the macronutrient selected from the bar chart. As the user hovers over the circles, a detailed description is displayed. Padma also worked on 
+The nutrition label is connected with the circular packing chart, hence Pallavi worked on displaying the respective number of mg consisting within the food item selected. In addition, she created the label with a detailed description.
+
 
